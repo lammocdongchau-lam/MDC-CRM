@@ -207,6 +207,38 @@ textarea.form-input{resize:vertical;height:65px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#d4c9b8;border-radius:10px}
 ::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+
+/* ── RESPONSIVE MOBILE ─────────────────────────────── */
+@media (max-width: 768px) {
+  body { overflow: auto; }
+  .sidebar {
+    position: fixed; left: -260px; top: 0; bottom: 0;
+    z-index: 500; transition: left .25s ease; width: 260px;
+  }
+  .sidebar.open { left: 0; }
+  .sidebar-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.45); z-index: 499;
+  }
+  .sidebar-overlay.open { display: block; }
+  .main { width: 100% !important; overflow-y: auto; }
+  .topbar { padding: 0 10px; gap: 6px; height: 52px; position: sticky; top: 0; z-index: 100; }
+  .page-title { font-size: 16px; }
+  .search-bar { display: none !important; }
+  .hamburger { display: flex !important; width: 34px; height: 34px; background: rgba(255,255,255,.1); border: none; border-radius: 8px; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; flex-shrink: 0; color: #fff; }
+  .stats-row { grid-template-columns: repeat(2,1fr) !important; gap: 8px; }
+  .stat-card { padding: 10px 12px; }
+  .stat-value { font-size: 20px; }
+  .content { padding: 12px; }
+  .chart-row { grid-template-columns: 1fr !important; }
+  .table-wrap { overflow-x: auto; }
+  table { min-width: 580px; }
+  .pipeline { grid-template-columns: repeat(8,140px) !important; overflow-x: auto; }
+  .modal, .modal-lg { width: 96% !important; max-height: 92vh; overflow-y: auto; }
+  .topbar-actions .btn { padding: 5px 10px; font-size: 12px; }
+  #sync-banner { font-size: 11px; padding: 5px 12px; }
+}
+.hamburger { display: none; }
 </style>
 </head>
 <body>
@@ -255,6 +287,8 @@ textarea.form-input{resize:vertical;height:65px}
     <button class="btn btn-sm" style="background:var(--amber);color:#fff" onclick="showPage('connect',document.querySelector('[data-page=connect]'))">Kết nối ngay →</button>
   </div>
   <div class="topbar">
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="page-title" id="page-title">Dashboard</div>
     <div class="topbar-actions">
       <button class="btn btn-outline btn-sm" id="sync-btn" onclick="syncNow()" title="Đồng bộ ngay">🔄 Sync</button>
@@ -1141,6 +1175,20 @@ removeLead = async function(id) {
     }
   }, 800);
 };
+
+// Mobile sidebar
+function toggleSidebar(){
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+function closeSidebar(){
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+document.querySelectorAll('.nav-item').forEach(el=>{
+  el.addEventListener('click',()=>{ if(window.innerWidth<=768) closeSidebar(); });
+});
+
 </script>
 </body>
 </html>
