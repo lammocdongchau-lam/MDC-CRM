@@ -409,7 +409,10 @@ function applySettingsUI(s) {
 // ══════════════════════════════════════════════════════════════
 // GOOGLE SHEETS API
 // ══════════════════════════════════════════════════════════════
-function getApiUrl() { return localStorage.getItem(LS_API_KEY) || ''; }
+function getApiUrl() {
+  const DEFAULT_URL = 'https://script.google.com/macros/s/AKfycbyayW_999PF1xGjFNq_6maRBzNiP7HYf4xodOKwHLw5HKT-svpRFLJCe1kP7XufvX7j/exec';
+  return localStorage.getItem(LS_API_KEY) || DEFAULT_URL;
+}
 function setApiUrl(url) { apiUrl=url; localStorage.setItem(LS_API_KEY, url); }
 
 async function apiFetch(params) {
