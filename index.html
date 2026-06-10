@@ -1203,50 +1203,70 @@ function applySettingsUI(s){
 // ══════════════════════════════════════════════════════════════
 function getApiUrl(){
   const DEFAULT='https://script.google.com/macros/s/AKfycbz-PGPFlH1hBfa_vbOi3cLNQsr-ZUjtyH2KhfyqWkgkGMWGlNAvfQY9WkdIjtChLP9Z/exec';
-  return localStorage.getItem(LS_API_KEY)||DEFAULT;
+  const url=localStorage.getItem(LS_API_KEY)||DEFAULT;
+  console.log('🔗 API URL:', url.substring(0,50)+'...', 'from:', localStorage.getItem(LS_API_KEY)?'localStorage':'DEFAULT');
+  return url;
 }
 function setApiUrl(url){apiUrl=url;localStorage.setItem(LS_API_KEY,url);}
 
 async function apiFetch(params){
   const url=getApiUrl();
   if(!url) throw new Error('API URL chưa cài đặt');
-  const res=await fetch(url+'?'+new URLSearchParams(params).toString(),{method:'GET',redirect:'follow'});
+  console.log('📡 apiFetch called with:', params);
+  const res=await fetch(url+'?'+new URLSearchParams(params).toString(),{
+    method:'GET',
+    redirect:'follow',
+    mode:'cors',
+    credentials:'omit',
+    headers:{'Accept':'application/json'}
+  });
   if(!res.ok) throw new Error('HTTP '+res.status);
   const json=await res.json();
   if(!json.ok) throw new Error(json.error||'API error');
+  console.log('✅ apiFetch response:', json);
   return json;
 }
 
 async function apiPost(body){
   const url=getApiUrl();
   if(!url) throw new Error('API URL chưa cài đặt');
-  const res=await fetch(url+'?'+new URLSearchParams({action:body.action,payload:JSON.stringify(body)}).toString(),{method:'GET',redirect:'follow'});
+  console.log('📤 apiPost called with action:', body.action);
+  const res=await fetch(url+'?'+new URLSearchParams({action:body.action,payload:JSON.stringify(body)}).toString(),{
+    method:'GET',
+    redirect:'follow',
+    mode:'cors',
+    credentials:'omit',
+    headers:{'Accept':'application/json'}
+  });
   if(!res.ok) throw new Error('HTTP '+res.status);
   const json=await res.json();
   if(!json.ok) throw new Error(json.error||'API error');
+  console.log('✅ apiPost response:', json);
   return json;
 }
 
 async function syncFromSheets(){
   setSyncState('syncing','🔄 Đang đồng bộ...');
   try{
+    console.log('🔄 syncFromSheets started');
     const data=await apiFetch({action:'getAll'});
     if(data.leads)  leads=data.leads;
     if(data.tasks)  tasks=data.tasks;
-    // Đồng bộ nhân viên từ Sheets → thiết bị này (giúp mobile nhận staff mới)
-    if(data.staff && data.staff.length > 0){
-      const localStaff = loadStaffList();
-      // Chỉ replace nếu Sheets có nhiều hơn hoặc local trống
-      if(localStaff.length === 0 || data.staff.length >= localStaff.length){
-        saveStaffList(data.staff);
-      }
+    
+    // ✅ ALWAYS replace staff từ Sheets (source of truth)
+    if(data.staff && Array.isArray(data.staff) && data.staff.length > 0){
+      saveStaffList(data.staff);
+      console.log('✅ Staff synced from Sheets:', data.staff.length, 'staff');
     }
+    
+    console.log('📊 Data after sync - leads:', leads.length, 'tasks:', tasks.length, 'staff:', (loadStaffList()||[]).length);
     saveLocal();
     setSyncState('connected',`✅ Đồng bộ lúc ${nowStr()}`);
     isConnected=true;
     updateBadges();
     return true;
   }catch(e){
+    console.error('❌ Sync error:', e);
     setSyncState('error','❌ '+e.message);
     isConnected=false;
     return false;
@@ -1273,15 +1293,30 @@ function logActivity(action, target, targetId, targetName, detail='', oldStage='
 }
 
 async function syncNow(){
-  if(isSyncing) return;
+  if(isSyncing){
+    toast('⏳ Đang đồng bộ...','⏳');
+    return;
+  }
   isSyncing=true;
-  document.getElementById('sync-btn').textContent='⏳ Syncing...';
-  const ok=await syncFromSheets();
-  isSyncing=false;
-  document.getElementById('sync-btn').textContent='🔄 Sync';
-  if(ok){
-    rerenderCurrent();
-    toast('✅ Đồng bộ thành công!');
+  const btn=document.getElementById('sync-btn');
+  btn.textContent='⏳ Syncing...';
+  btn.disabled=true;
+  
+  try{
+    const ok=await syncFromSheets();
+    if(ok){
+      rerenderCurrent();
+      toast('✅ Đồng bộ thành công!','✅');
+    }else{
+      toast('❌ Đồng bộ thất bại, kiểm tra kết nối','❌');
+    }
+  }catch(e){
+    console.error('Sync error:', e);
+    toast('❌ Lỗi: '+e.message,'❌');
+  }finally{
+    isSyncing=false;
+    btn.textContent='🔄 Sync';
+    btn.disabled=false;
   }
 }
 
@@ -2591,7 +2626,21 @@ initDefaultStaff();
 
 // Restore session (nếu đã đăng nhập trước đó, < 8 tiếng)
 if(restoreSession()){
+  console.log('🔐 Session restored, starting app with immediate sync...');
   startApp();
+  
+  // ✅ IMMEDIATE SYNC khi app khởi động
+  if(getApiUrl() && !isSyncing){
+    console.log('🔄 Triggering initial sync on startup...');
+    syncFromSheets().then(ok=>{
+      if(ok && currentUser){
+        console.log('✅ Initial sync complete');
+        rerenderCurrent();
+      }
+    }).catch(err=>{
+      console.error('❌ Initial sync failed:', err);
+    });
+  }
 }
 // Else: login screen đã hiển thị sẵn
 
