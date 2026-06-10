@@ -555,6 +555,8 @@ input[type="time"].form-input{font-family:'DM Mono',monospace;font-size:12px}
         <div class="form-group"><label class="form-label">Lead Score (0–100)</label><input type="number" class="form-input" id="f-score" min="0" max="100" placeholder="50"></div>
         <div class="form-group"><label class="form-label">Pipeline</label><select class="form-input" id="f-pipeline" onchange="updateStageDropdown()"><option value="tk">🎨 Thiết kế</option><option value="tc">🔨 Thi công</option></select></div>
         <div class="form-group"><label class="form-label">Giai đoạn</label><select class="form-input" id="f-stage"></select></div>
+        <div class="form-group"><label class="form-label">👉 Hành động tiếp theo</label><input type="text" class="form-input" id="f-next-action" placeholder="VD: Gọi chốt lịch khảo sát"></div>
+        <div class="form-group"><label class="form-label">📅 Ngày hành động</label><input type="date" class="form-input" id="f-next-date"></div>
         <div class="form-group full"><label class="form-label">Ghi chú / Nhu cầu</label><textarea class="form-input" id="f-note" placeholder="Phong cách thiết kế, yêu cầu đặc biệt, nỗi lo của KH..."></textarea></div>
       </div>
     </div>
@@ -627,16 +629,20 @@ input[type="time"].form-input{font-family:'DM Mono',monospace;font-size:12px}
 <!-- TASK MODAL -->
 <div class="modal-overlay" id="task-modal">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">📝 Thêm Công việc</div><button class="icon-btn" onclick="document.getElementById('task-modal').classList.remove('open')">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="task-modal-title">📝 Thêm Công việc</div><button class="icon-btn" onclick="closeTaskModal()">✕</button></div>
     <div class="modal-body">
       <div class="form-grid">
         <div class="form-group full"><label class="form-label">Nội dung *</label><input type="text" class="form-input" id="t-text" placeholder="Gọi follow-up anh..."></div>
-        <div class="form-group"><label class="form-label">KH liên quan</label><input type="text" class="form-input" id="t-lead" placeholder="Tên KH"></div>
-        <div class="form-group"><label class="form-label">Thời hạn</label><input type="text" class="form-input" id="t-due" placeholder="Hôm nay 15:00"></div>
+        <div class="form-group full"><label class="form-label">Khách hàng liên quan</label><select class="form-input" id="t-lead-id"><option value="">— Không gắn KH —</option></select></div>
+        <div class="form-group"><label class="form-label">Loại việc</label><select class="form-input" id="t-type"><option value="call">📞 Gọi điện</option><option value="meet">🤝 Gặp/Họp</option><option value="send">📤 Gửi tài liệu</option><option value="design">🎨 Thiết kế</option><option value="construct">🔨 Thi công</option><option value="payment">💰 Thanh toán</option><option value="followup">🔄 Theo dõi</option><option value="other">📌 Khác</option></select></div>
         <div class="form-group"><label class="form-label">Ưu tiên</label><select class="form-input" id="t-urgency"><option value="red">🔴 Khẩn cấp</option><option value="orange" selected>🟡 Quan trọng</option><option value="green">🟢 Bình thường</option></select></div>
+        <div class="form-group"><label class="form-label">Ngày thực hiện *</label><input type="date" class="form-input" id="t-date"></div>
+        <div class="form-group"><label class="form-label">Giờ</label><input type="time" class="form-input" id="t-time" value="09:00"></div>
+        <div class="form-group full"><label class="form-label">Người thực hiện</label><select class="form-input" id="t-assignee"></select></div>
+        <div class="form-group full"><label class="form-label">Ghi chú</label><textarea class="form-input" id="t-note" rows="2" placeholder="Chi tiết, kịch bản, lưu ý..."></textarea></div>
       </div>
     </div>
-    <div class="modal-footer"><button class="btn btn-outline" onclick="document.getElementById('task-modal').classList.remove('open')">Hủy</button><button class="btn btn-primary" onclick="saveTask()">💾 Lưu</button></div>
+    <div class="modal-footer"><button class="btn btn-outline" onclick="closeTaskModal()">Hủy</button><button class="btn btn-primary" id="task-save-btn" onclick="saveTask()">💾 Lưu công việc</button></div>
   </div>
 </div>
 
@@ -930,121 +936,114 @@ function daysSinceContact(l){
 // STAGE CHECKLIST — Lộ trình công việc theo giai đoạn
 // ══════════════════════════════════════════════════════════════
 const STAGE_CHECKLIST = {
-  // ── PIPELINE THIẾT KẾ ─────────────────────────────────────
+  // ═══ PIPELINE THIẾT KẾ ═══
+  // GĐ01 TIẾP CẬN — Telesale & Zalo
   tk_new: [
-    {text:'Ghi nhận thông tin KH (tên, SĐT, email, địa chỉ CT)', type:'call', urgency:'red'},
-    {text:'Xác nhận nhu cầu sơ bộ (phong cách, diện tích, ngân sách)', type:'call', urgency:'red'},
-    {text:'Đặt lịch tư vấn trực tiếp hoặc online', type:'meet', urgency:'orange'},
+    {text:'Gọi điện trong vòng 30 phút sau khi nhận lead', type:'call', urgency:'red', sla:'≤ 30 phút', tip:'Nếu quá 30 phút → báo Admin nhắn KH trước. Không để KH chờ >1h'},
+    {text:'Mở đầu: Chào cá nhân hóa + nhắc đúng lý do gọi', type:'call', urgency:'red', sla:'30 giây đầu', tip:'"Chào anh [Tên], em là [Tên Sales] – MDC Interior. Em gọi vì anh vừa quan tâm đến..."'},
+    {text:'Hỏi 1 câu SPIN khai thác Pain Point – lắng nghe, không ngắt lời', type:'call', urgency:'red', sla:'0:30–1:30', tip:'"Anh dự kiến nhận nhà tháng mấy? / Điều gì anh lo nhất khi làm nội thất?"'},
+    {text:'Trao giá trị & xin kết bạn Zalo (1 lý do + 1 tài liệu cụ thể)', type:'send', urgency:'red', sla:'1:30–2:30', tip:'"Em có bộ 3 công trình thực tế + báo giá sơ bộ đúng dạng nhà anh. Kết bạn Zalo nhé?"'},
+    {text:'Phân loại lead A/B/C ngay sau khi gác máy + ghi CRM', type:'other', urgency:'red', sla:'Trong 15 phút', tip:'A (≤6 tháng) → Chăm 1:1 | B (>6 tháng) → Phễu | C → Gác 90 ngày'},
+    {text:'Gửi Zalo: Chào + Portfolio + Quy trình + Báo giá mẫu', type:'send', urgency:'red', sla:'Trong 30 phút', tip:'Gửi đúng loại nhà (Biệt thự/Nhà phố/Căn hộ). Ảnh HD, không gửi ảnh mờ'},
   ],
+  // GĐ01 TIẾP CẬN — Chuỗi Zalo 5 ngày (Nhóm A,B)
   tk_consult: [
-    {text:'Gặp gỡ / gọi tư vấn — lắng nghe nhu cầu chi tiết', type:'meet', urgency:'red'},
-    {text:'Giới thiệu portfolio MDC phù hợp phong cách KH', type:'send', urgency:'orange'},
-    {text:'Ghi chú nhu cầu đặc biệt, nỗi lo của KH', type:'other', urgency:'orange'},
-    {text:'Follow-up sau tư vấn (hỏi cảm nhận, giải đáp thắc mắc)', type:'followup', urgency:'orange'},
+    {text:'Ngày 1 (9h): Gửi Video xưởng 30-60s + Thông điệp "Kiểm soát 100%"', type:'send', urgency:'red', sla:'9h Ngày 1', tip:'Không gửi dồn với tin kết bạn. Đợi sáng hôm sau'},
+    {text:'Ngày 2 (14h): Gửi Clip kỹ thuật cận cảnh (dán cạnh/chống ẩm)', type:'send', urgency:'red', sla:'14h Ngày 2', tip:'"Nội thất đẹp là phần cần, bền kỹ thuật mới là điều MDC ưu tiên"'},
+    {text:'Ngày 3 (9h): Gửi Album Before/After 3D vs Thực tế + Feedback', type:'send', urgency:'red', sla:'9h Ngày 3', tip:'"Thực tế còn đẹp hơn bản vẽ 3D"'},
+    {text:'Ngày 5 (9h): Mời thăm xưởng/khảo sát – lựa chọn kép', type:'meet', urgency:'red', sla:'9h Ngày 5', tip:'"Anh chọn tham quan xưởng (T7 hay CN?) hay khảo sát tại nhà?" KHÔNG hỏi Có/Không'},
+    {text:'Ngày 14: Re-engagement – gửi công trình mới bàn giao', type:'followup', urgency:'orange', sla:'Ngày 14', tip:'Không nhắc tin cũ. Nội dung hoàn toàn mới'},
+    {text:'Ngày 30: Check-in nhẹ – "Anh/chị cần hỗ trợ thêm không?"', type:'followup', urgency:'orange', sla:'Ngày 30', tip:'Đừng gây áp lực. Chỉ mở cửa nhẹ nhàng'},
   ],
+  // GĐ02 NIỀM TIN — Trước & trong buổi gặp/tham quan xưởng
   tk_survey: [
-    {text:'Xác nhận lịch khảo sát với KH', type:'call', urgency:'red'},
-    {text:'Khảo sát thực địa — đo đạc, chụp ảnh hiện trạng', type:'meet', urgency:'red'},
-    {text:'Ghi chú kết cấu đặc biệt, vị trí điện nước, hạn chế', type:'other', urgency:'orange'},
-    {text:'Tổng hợp biên bản khảo sát — gửi KH xác nhận', type:'send', urgency:'orange'},
+    {text:'Viết Hồ sơ KH 1 trang: tên, loại nhà, phong cách, ngân sách, nỗi lo', type:'other', urgency:'red', sla:'≥12h trước', tip:'Gửi QX + KTS đi cùng trước ≥12h. Không để họ hỏi lại điều mình đã biết'},
+    {text:'Re-confirm lịch hẹn qua Zalo trước 4-6 tiếng', type:'call', urgency:'red', sla:'4-6h trước', tip:'"Nhắc anh/chị lịch hẹn [giờ] hôm nay tại [địa điểm], em sẽ đón anh/chị nhé!"'},
+    {text:'Chuẩn bị: Brochure cứng + Bộ mẫu vật liệu + HĐ mẫu + Bút ký', type:'other', urgency:'red', sla:'Trước khi đi', tip:'Bộ mẫu đối chứng: ván thường (mẻ cạnh) vs ván MDC (CNC Zero-line)'},
+    {text:'Có mặt tại địa điểm trước giờ hẹn 15 phút', type:'meet', urgency:'red', sla:'15 phút trước', tip:'Kiểm tra vệ sinh, ánh sáng, đồ uống đã sẵn sàng'},
+    {text:'Dẫn đủ 4 chặng tour xưởng: Kho NL → CNC → Lắp ráp → Khu Sơn', type:'meet', urgency:'red', sla:'Trong buổi', tip:'Mỗi chặng có điểm chạm vật lý: cầm, thử, so sánh'},
+    {text:'Cho KH chạm ván thô và ván sơn – cảm nhận độ mịn thực tế', type:'meet', urgency:'red', sla:'Trong buổi', tip:'Xúc giác thuyết phục hơn ngôn từ 10 lần'},
+    {text:'Cuối buổi: Chốt ngay lịch khảo sát hoặc họp tư vấn thiết kế', type:'meet', urgency:'red', sla:'Cuối buổi', tip:'Lựa chọn kép: "Thứ 7 hay CN tiện hơn cho mình?"'},
+    {text:'Tặng quà khi KH ra về: Brochure + Mẫu vật liệu + Nước MDC', type:'send', urgency:'orange', sla:'Khi tiễn KH', tip:'Cử chỉ nhỏ tạo ấn tượng lớn về sự chu đáo của MDC'},
   ],
+  // GĐ03 CAM KẾT — Tư vấn & chốt HĐ thiết kế
   tk_quote_tk: [
-    {text:'Lập báo giá thiết kế chi tiết (concept + triển khai)', type:'design', urgency:'red'},
-    {text:'Gửi báo giá thiết kế cho KH', type:'send', urgency:'red'},
-    {text:'Giải thích cấu trúc báo giá — giá trị từng hạng mục', type:'call', urgency:'orange'},
-    {text:'Follow-up sau 2 ngày — hỏi phản hồi báo giá', type:'followup', urgency:'orange'},
-    {text:'Đàm phán / điều chỉnh nếu KH có ý kiến', type:'meet', urgency:'orange'},
+    {text:'TEACH: Bắt đầu bằng insight bất ngờ về không gian của KH', type:'meet', urgency:'red', sla:'15 phút đầu', tip:'"Với mặt bằng này, 80% gia chủ hay bỏ qua [điều X]..." → KH tự nhận ra vấn đề'},
+    {text:'TAILOR: Trình bày 2 phương án (Safety + MDC Signature)', type:'design', urgency:'red', sla:'45 phút giữa', tip:'Bắt đầu từ "nỗi lo lớn nhất". Cho cầm mẫu vật liệu TRONG KHI trình bày'},
+    {text:'Gửi Biên bản họp qua Zalo trong vòng 2h sau khi kết thúc', type:'send', urgency:'red', sla:'≤ 2h sau họp', tip:'Tóm tắt: điểm thống nhất + vật liệu đã chọn + bước tiếp theo'},
+    {text:'Gửi BOQ (Báo giá chi tiết) sau 24h', type:'send', urgency:'red', sla:'≤ 24h', tip:'Chia theo từng phòng, ghi rõ mã vật liệu. KHÔNG báo giá gộp'},
+    {text:'Gửi Draft HĐ để KH xem trước sau 48h', type:'send', urgency:'red', sla:'≤ 48h', tip:'Nổi bật điều khoản bảo vệ KH: phạt trễ, cam kết vật tư, bảo hành'},
+    {text:'Xử lý phản đối giá: đề xuất tối ưu hóa (không giảm giá thẳng)', type:'other', urgency:'orange', sla:'Khi KH ngại giá', tip:'Giữ mặt tiền vật liệu cao cấp, thay khu khuất → giảm 10-15%'},
   ],
+  // GĐ03 CAM KẾT — Chốt ký
   tk_sign_tk: [
-    {text:'Soạn hợp đồng thiết kế đầy đủ điều khoản', type:'design', urgency:'red'},
-    {text:'Gặp KH ký hợp đồng thiết kế', type:'meet', urgency:'red'},
-    {text:'Thu thanh toán đợt 1 theo hợp đồng', type:'payment', urgency:'red'},
-    {text:'Bàn giao hợp đồng + biên nhận thanh toán cho KH', type:'send', urgency:'orange'},
-    {text:'Kickoff nội bộ — brief KTS bắt đầu thiết kế', type:'design', urgency:'orange'},
+    {text:'TAKE CONTROL: Tóm tắt đồng thuận + loại bỏ nỗi sợ + đề nghị ký', type:'meet', urgency:'red', sla:'20 phút cuối', tip:'"Anh/chị đã ưng phương án X? → Để bắt đầu 3D sáng mai, anh ký HĐ hôm nay nhé"'},
+    {text:'Ngày 2 (nếu chưa ký): Gửi Video xưởng đang SX sản phẩm tương tự', type:'send', urgency:'red', sla:'Sáng Ngày 2', tip:'"Sáng nay xưởng đang làm [hạng mục] giống nhà mình..." → FOMO tích cực'},
+    {text:'Ngày 2: Gửi Infographic Cam kết 5 Không của MDC', type:'send', urgency:'red', sla:'Chiều Ngày 2', tip:'Không phát sinh, Không sai chủng loại, Không trễ, Không bẩn, Không bỏ rơi'},
+    {text:'Ngày 3: Gọi chốt lịch ký với kỹ thuật lựa chọn kép', type:'call', urgency:'red', sla:'Chiều Ngày 3', tip:'"Lịch SX tháng này gần kín. Thứ... hay Thứ... để em qua gửi HĐ bản cứng?"'},
+    {text:'Thu thanh toán đợt 1 theo hợp đồng', type:'payment', urgency:'red', sla:'Khi ký HĐ', tip:'Bàn giao biên nhận + lịch kickoff thiết kế'},
   ],
+  // Triển khai TK
   tk_design: [
-    {text:'Bàn giao brief thiết kế cho KTS phụ trách', type:'design', urgency:'red'},
-    {text:'Trình KH bản concept + moodboard (lần 1)', type:'meet', urgency:'red'},
-    {text:'Ghi nhận góp ý — chỉnh sửa theo phản hồi KH', type:'design', urgency:'orange'},
-    {text:'Trình bản triển khai thiết kế (mặt bằng, phối cảnh 3D)', type:'meet', urgency:'orange'},
-    {text:'Cập nhật bản vẽ theo góp ý lần cuối', type:'design', urgency:'orange'},
-    {text:'KH xác nhận thiết kế đã duyệt', type:'send', urgency:'red'},
+    {text:'Brief KTS bắt đầu thiết kế + trình concept/moodboard lần 1', type:'design', urgency:'red', sla:'Sau ký HĐ', tip:'Ghi nhận góp ý, chỉnh theo phản hồi KH'},
+    {text:'Trình bản triển khai (mặt bằng, phối cảnh 3D)', type:'design', urgency:'orange', sla:'Theo tiến độ', tip:'Cập nhật bản vẽ theo góp ý lần cuối'},
+    {text:'KH xác nhận thiết kế đã duyệt', type:'send', urgency:'red', sla:'Chốt thiết kế', tip:'Lấy xác nhận bằng văn bản/Zalo trước khi sang bước sau'},
   ],
   tk_handover: [
-    {text:'Hoàn thiện hồ sơ bản vẽ thi công đầy đủ', type:'design', urgency:'red'},
-    {text:'Kiểm tra chất lượng hồ sơ trước khi bàn giao', type:'other', urgency:'red'},
-    {text:'Bàn giao hồ sơ thiết kế cho KH (file + bản in)', type:'send', urgency:'red'},
-    {text:'Thu thanh toán đợt cuối hợp đồng thiết kế', type:'payment', urgency:'red'},
-    {text:'Biên bản bàn giao hồ sơ — KH ký xác nhận', type:'send', urgency:'orange'},
+    {text:'Hoàn thiện hồ sơ bản vẽ thi công + QC trước bàn giao', type:'design', urgency:'red', sla:'Trước BG', tip:'Kiểm tra chất lượng hồ sơ đầy đủ'},
+    {text:'Bàn giao hồ sơ thiết kế cho KH (file + bản in)', type:'send', urgency:'red', sla:'Ngày BG', tip:'Biên bản bàn giao – KH ký xác nhận'},
+    {text:'Thu thanh toán đợt cuối hợp đồng thiết kế', type:'payment', urgency:'red', sla:'Khi BG', tip:'Quyết toán HĐ thiết kế'},
   ],
   tk_quote_tc: [
-    {text:'Lập dự toán thi công từ hồ sơ thiết kế', type:'construct', urgency:'red'},
-    {text:'Gửi báo giá thi công chi tiết cho KH', type:'send', urgency:'red'},
-    {text:'Tư vấn giải thích từng hạng mục thi công', type:'call', urgency:'orange'},
-    {text:'Follow-up phản hồi báo giá thi công', type:'followup', urgency:'orange'},
+    {text:'Lập dự toán thi công từ hồ sơ thiết kế', type:'construct', urgency:'red', sla:'Sau BG hồ sơ', tip:'Báo giá chi tiết từng hạng mục'},
+    {text:'Gửi báo giá thi công + tư vấn từng hạng mục', type:'send', urgency:'red', sla:'≤ 24h', tip:'Follow-up phản hồi báo giá thi công'},
   ],
+  // GĐ05 BÀN GIAO & CSKH (áp dụng sau nghiệm thu)
   tk_accept: [
-    {text:'Hoàn thành nghiệm thu hồ sơ thiết kế với KH', type:'meet', urgency:'red'},
-    {text:'Gửi bảng đánh giá chất lượng dịch vụ thiết kế', type:'send', urgency:'orange'},
-    {text:'Xin feedback + đề nghị giới thiệu khách hàng mới', type:'followup', urgency:'orange'},
+    {text:'Gọi thăm hỏi KH sau 7 ngày: đã quen công năng mới chưa?', type:'followup', urgency:'red', sla:'Ngày 7 sau BG', tip:'"Bản lề, ngăn kéo có cần căn chỉnh không? MDC qua xử lý trong ngày ạ"'},
+    {text:'Đề nghị KH để lại Review Google Maps / Fanpage MDC', type:'send', urgency:'red', sla:'Trong buổi BG', tip:'Đưa thẳng link, hỗ trợ KH viết nếu cần'},
+    {text:'Giới thiệu chương trình MDC Friends (tri ân giới thiệu KH)', type:'send', urgency:'red', sla:'Sau BG 2-4 tuần', tip:'Gửi card referral + giải thích quyền lợi'},
+    {text:'Gửi tặng bộ ảnh HD ngôi nhà sau 3 tháng', type:'send', urgency:'green', sla:'Tháng 3 sau BG', tip:'"Bộ ảnh kỷ niệm MDC tặng anh/chị – cứ đăng lên trang cá nhân ạ"'},
+    {text:'Chúc mừng sinh nhật gia chủ / kỷ niệm 1 năm dọn nhà', type:'followup', urgency:'green', sla:'Đúng ngày', tip:'Thiệp điện cá nhân hóa + quà nhỏ logo MDC'},
   ],
 
-  // ── PIPELINE THI CÔNG ─────────────────────────────────────
+  // ═══ PIPELINE THI CÔNG ═══
   tc_new: [
-    {text:'Xác nhận thông tin dự án thi công (diện tích, địa điểm)', type:'call', urgency:'red'},
-    {text:'Xác nhận hồ sơ thiết kế đã đầy đủ chưa', type:'other', urgency:'red'},
-    {text:'Đặt lịch tư vấn thi công + khảo sát sơ bộ', type:'meet', urgency:'orange'},
+    {text:'Xác nhận thông tin dự án TC + hồ sơ thiết kế đã đủ chưa', type:'call', urgency:'red', sla:'Khi nhận', tip:'Đặt lịch tư vấn thi công + khảo sát sơ bộ'},
+    {text:'Re-confirm lịch hẹn qua Zalo trước 4-6 tiếng', type:'call', urgency:'red', sla:'4-6h trước', tip:'Nhắn nhẹ nhàng, xác nhận địa điểm'},
   ],
   tc_consult: [
-    {text:'Gặp KH tư vấn quy trình thi công MDC', type:'meet', urgency:'red'},
-    {text:'Xem xét hồ sơ thiết kế — đánh giá khả thi thi công', type:'construct', urgency:'orange'},
-    {text:'Giải đáp thắc mắc về tiến độ, vật liệu, đội thi công', type:'call', urgency:'orange'},
-    {text:'Follow-up sau tư vấn thi công', type:'followup', urgency:'orange'},
+    {text:'Gặp KH tư vấn quy trình thi công MDC', type:'meet', urgency:'red', sla:'Buổi gặp', tip:'Giải đáp tiến độ, vật liệu, đội thi công'},
+    {text:'Xem xét hồ sơ thiết kế – đánh giá khả thi thi công', type:'construct', urgency:'orange', sla:'Trước báo giá', tip:'Xác định hạng mục phát sinh tiềm ẩn'},
   ],
   tc_survey: [
-    {text:'Khảo sát hiện trạng công trình thi công', type:'meet', urgency:'red'},
-    {text:'Đánh giá kết cấu, điện nước, cốt sàn', type:'construct', urgency:'red'},
-    {text:'Xác định hạng mục phát sinh tiềm ẩn', type:'other', urgency:'orange'},
-    {text:'Lập biên bản khảo sát thi công', type:'send', urgency:'orange'},
+    {text:'Khảo sát hiện trạng công trình + đánh giá kết cấu/điện nước', type:'meet', urgency:'red', sla:'Lịch khảo sát', tip:'Xác định cốt sàn, hạng mục phát sinh'},
+    {text:'Lập biên bản khảo sát thi công', type:'send', urgency:'orange', sla:'Sau khảo sát', tip:'Gửi KH xác nhận'},
   ],
   tc_quote_tc: [
-    {text:'Lập dự toán thi công chi tiết từng hạng mục', type:'construct', urgency:'red'},
-    {text:'Gửi báo giá thi công đầy đủ cho KH', type:'send', urgency:'red'},
-    {text:'Thuyết trình báo giá — giải thích đơn giá vật tư + nhân công', type:'meet', urgency:'orange'},
-    {text:'Follow-up phản hồi sau 2 ngày', type:'followup', urgency:'orange'},
-    {text:'Điều chỉnh báo giá nếu KH yêu cầu', type:'other', urgency:'orange'},
+    {text:'Lập dự toán TC chi tiết từng hạng mục', type:'construct', urgency:'red', sla:'≤ 48h', tip:'Chia theo phòng, ghi mã vật liệu. KHÔNG báo giá gộp'},
+    {text:'Thuyết trình báo giá – giải thích đơn giá vật tư + nhân công', type:'meet', urgency:'orange', sla:'Buổi gặp', tip:'Follow-up phản hồi sau 2 ngày'},
+    {text:'Gửi Infographic Cam kết 5 Không + Video xưởng tạo FOMO', type:'send', urgency:'orange', sla:'Nếu chưa chốt', tip:'Không phát sinh, sai chủng loại, trễ, bẩn, bỏ rơi'},
   ],
   tc_sign_tc: [
-    {text:'Soạn hợp đồng thi công đầy đủ điều khoản tiến độ', type:'construct', urgency:'red'},
-    {text:'Gặp KH ký hợp đồng thi công', type:'meet', urgency:'red'},
-    {text:'Thu thanh toán đợt 1 theo hợp đồng thi công', type:'payment', urgency:'red'},
-    {text:'Bàn giao lịch thi công chi tiết cho KH', type:'send', urgency:'orange'},
-    {text:'Họp kickoff nội bộ — brief đội thi công', type:'construct', urgency:'orange'},
+    {text:'Chốt ký HĐ thi công với kỹ thuật lựa chọn kép', type:'meet', urgency:'red', sla:'Buổi ký', tip:'"Lịch SX gần kín. Thứ... hay Thứ... để qua gửi HĐ?"'},
+    {text:'Thu thanh toán đợt 1 + bàn giao lịch thi công chi tiết', type:'payment', urgency:'red', sla:'Khi ký', tip:'Họp kickoff nội bộ – brief đội thi công'},
   ],
   tc_docs: [
-    {text:'Lập hồ sơ thi công: bản vẽ shop drawing', type:'construct', urgency:'red'},
-    {text:'Lập bảng tiến độ thi công chi tiết (Gantt)', type:'construct', urgency:'red'},
-    {text:'Lên danh sách vật tư + đặt hàng dài hạn', type:'construct', urgency:'orange'},
-    {text:'Phân công nhân sự và đội thi công cụ thể', type:'other', urgency:'orange'},
-    {text:'Gửi lịch thi công + thông tin đội ngũ cho KH', type:'send', urgency:'orange'},
+    {text:'Lập hồ sơ thi công: shop drawing + bảng tiến độ (Gantt)', type:'construct', urgency:'red', sla:'Sau ký HĐ', tip:'Lên danh sách vật tư + đặt hàng dài hạn'},
+    {text:'Phân công nhân sự + gửi lịch TC và đội ngũ cho KH', type:'send', urgency:'orange', sla:'Trước thi công', tip:'KH nắm rõ tiến độ và người phụ trách'},
   ],
   tc_construct: [
-    {text:'Nghiệm thu mặt bằng + bàn giao công trường cho đội TC', type:'construct', urgency:'red'},
-    {text:'Báo cáo tiến độ tuần cho KH (ảnh + % hoàn thành)', type:'send', urgency:'orange'},
-    {text:'Kiểm tra chất lượng định kỳ theo từng hạng mục', type:'construct', urgency:'orange'},
-    {text:'Xử lý phát sinh (nếu có) — thông báo KH ngay', type:'call', urgency:'orange'},
-    {text:'Thu thanh toán đợt 2 khi đạt mốc tiến độ', type:'payment', urgency:'orange'},
-    {text:'Nghiệm thu nội bộ trước khi bàn giao KH', type:'construct', urgency:'red'},
+    {text:'Nghiệm thu mặt bằng + bàn giao công trường cho đội TC', type:'construct', urgency:'red', sla:'Khởi công', tip:'Biên bản bàn giao mặt bằng'},
+    {text:'Báo cáo tiến độ tuần cho KH (ảnh + % hoàn thành)', type:'send', urgency:'orange', sla:'Hàng tuần', tip:'Chủ động cập nhật, tạo niềm tin'},
+    {text:'Kiểm tra chất lượng định kỳ + xử lý phát sinh báo KH ngay', type:'construct', urgency:'orange', sla:'Định kỳ', tip:'Phát sinh phải thông báo KH ngay, không giấu'},
+    {text:'Thu thanh toán đợt 2 khi đạt mốc tiến độ', type:'payment', urgency:'orange', sla:'Theo mốc', tip:'Bám sát điều khoản thanh toán HĐ'},
   ],
   tc_handover: [
-    {text:'Nghiệm thu công trình với KH — kiểm tra từng hạng mục', type:'meet', urgency:'red'},
-    {text:'Lập biên bản nghiệm thu + danh mục lỗi cần sửa (nếu có)', type:'send', urgency:'red'},
-    {text:'Hoàn thiện các lỗi nhỏ trước bàn giao chính thức', type:'construct', urgency:'red'},
-    {text:'Bàn giao công trình + hồ sơ bảo hành cho KH', type:'send', urgency:'red'},
-    {text:'Thu thanh toán đợt cuối — quyết toán hợp đồng', type:'payment', urgency:'red'},
-    {text:'Chụp ảnh công trình hoàn thiện (portfolio MDC)', type:'other', urgency:'green'},
-    {text:'Gửi phiếu khảo sát hài lòng + xin review Google', type:'send', urgency:'green'},
-    {text:'Nhắc lịch bảo hành định kỳ (3 tháng sau)', type:'followup', urgency:'green'},
+    {text:'Nghiệm thu công trình với KH – kiểm tra từng hạng mục', type:'meet', urgency:'red', sla:'Hoàn thành', tip:'Lập biên bản nghiệm thu + danh mục lỗi cần sửa'},
+    {text:'Hoàn thiện lỗi nhỏ + bàn giao công trình + hồ sơ bảo hành', type:'construct', urgency:'red', sla:'Trước BG', tip:'Xử lý punch list trước bàn giao chính thức'},
+    {text:'Thu thanh toán đợt cuối – quyết toán hợp đồng', type:'payment', urgency:'red', sla:'Khi BG', tip:'Quyết toán đầy đủ'},
+    {text:'Gọi thăm hỏi sau 7 ngày + xin Review Google + MDC Friends', type:'followup', urgency:'red', sla:'Ngày 7 sau BG', tip:'CSKH: review, giới thiệu KH mới, ảnh HD sau 3 tháng'},
   ],
 };
 
@@ -1069,7 +1068,8 @@ function createStageChecklistTasks(lead, newStage){
       date: dDate.toISOString().split('T')[0],
       time: '09:00',
       assignee: lead.owner || currentUser?.id || '',
-      note: '',
+      note: tpl.tip || '',
+      sla: tpl.sla || '',
       done: false,
       created: new Date().toISOString(),
       due: dDate.toISOString().split('T')[0],
@@ -1791,16 +1791,20 @@ function renderTasksByKh(khList, selKh){
       ${stageChecklist.length > 0 ? `
       <div style="background:linear-gradient(135deg,${pipe==='tc'?'#E0F4F1,#EBF3FC':'#EBF3FC,#F0E8FB'});border:1px solid ${pipe==='tc'?'#a7d9d3':'#c3d9f0'};border-radius:10px;padding:12px 14px;margin-bottom:10px">
         <div style="font-size:11px;font-weight:700;color:${pipe==='tc'?'var(--tc-color)':'var(--tk-color)'};text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">
-          📋 Việc cần làm ở giai đoạn ${stObj.label}
+          📋 Lộ trình ${stObj.label} — ${stageChecklist.length} việc chuẩn
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
+        <div style="display:flex;flex-direction:column;gap:4px">
           ${stageChecklist.map((tpl,i)=>{
             const done = khTasks.find(t=>t.isTemplate&&t.stage===selKh.stage&&t.text===tpl.text&&t.done);
-            const exists = khTasks.find(t=>t.isTemplate&&t.stage===selKh.stage&&t.text===tpl.text);
-            const tt = TASK_TYPES[tpl.type]||TASK_TYPES.other;
-            return `<div style="display:flex;align-items:center;gap:6px;padding:4px 6px;border-radius:5px;background:${done?'var(--lgreen)':'var(--white)'}">
-              <span style="font-size:11px">${done?'✅':exists?'🔲':'⬜'}</span>
-              <span style="font-size:11px;color:${done?'var(--mgray)':'var(--charcoal)'};${done?'text-decoration:line-through':''};line-height:1.3">${tpl.text.length>45?tpl.text.slice(0,45)+'...':tpl.text}</span>
+            const uColor = tpl.urgency==='red'?'var(--ruby)':tpl.urgency==='orange'?'var(--amber)':'var(--emerald)';
+            return `<div style="display:flex;align-items:flex-start;gap:7px;padding:6px 8px;border-radius:6px;background:${done?'var(--lgreen)':'var(--white)'}" title="${(tpl.tip||'').replace(/"/g,'&quot;')}">
+              <span style="font-size:12px;flex-shrink:0">${done?'✅':'⬜'}</span>
+              <span style="width:5px;height:5px;border-radius:50%;background:${uColor};flex-shrink:0;margin-top:5px"></span>
+              <div style="flex:1;min-width:0">
+                <span style="font-size:11.5px;color:${done?'var(--mgray)':'var(--charcoal)'};${done?'text-decoration:line-through':''};line-height:1.35;font-weight:500">${tpl.text}</span>
+                ${tpl.sla?`<span style="font-size:9px;font-family:'DM Mono',monospace;color:${uColor};background:${pipe==='tc'?'rgba(10,77,69,.08)':'rgba(15,52,96,.08)'};padding:1px 5px;border-radius:6px;margin-left:5px;white-space:nowrap">${tpl.sla}</span>`:''}
+                ${tpl.tip?`<div style="font-size:10px;color:var(--mgray);line-height:1.3;margin-top:2px;font-style:italic">💬 ${tpl.tip.length>70?tpl.tip.slice(0,70)+'...':tpl.tip}</div>`:''}
+              </div>
             </div>`;
           }).join('')}
         </div>
@@ -1838,7 +1842,7 @@ async function createMissingChecklistTasks(leadId, stage){
   const newTasks = missing.map((tpl,idx)=>{
     const dd=deadlineDays[tpl.urgency]||3;
     const dDate=new Date(); dDate.setDate(dDate.getDate()+dd);
-    return {id:Date.now()+idx+Math.random()*1000|0,text:tpl.text,type:tpl.type,urgency:tpl.urgency,leadId:Number(leadId),lead:l.name,date:dDate.toISOString().split('T')[0],time:'09:00',assignee:l.owner||currentUser?.id||'',note:'',done:false,created:new Date().toISOString(),due:dDate.toISOString().split('T')[0],isTemplate:true,stage};
+    return {id:Date.now()+idx+Math.random()*1000|0,text:tpl.text,type:tpl.type,urgency:tpl.urgency,leadId:Number(leadId),lead:l.name,date:dDate.toISOString().split('T')[0],time:'09:00',assignee:l.owner||currentUser?.id||'',note:tpl.tip||'',sla:tpl.sla||'',done:false,created:new Date().toISOString(),due:dDate.toISOString().split('T')[0],isTemplate:true,stage};
   });
   tasks.push(...newTasks);
   saveLocal(); renderTasks(); updateBadges();
@@ -2089,6 +2093,7 @@ function saveSettingsForm(){
 function openPanel(id){
   selectedLead=visibleLeads().find(l=>l.id==id); if(!selectedLead) return;
   const l=selectedLead;
+  const canEdit=canEditLead(l);
   const st=getStageObj(l.stage);
   const pipe=getPipelineOfStage(l.stage||'tk_new');
   const stages=getStages(pipe);
@@ -2280,7 +2285,7 @@ function openAddLead(pipe='tk', defaultStage=null){
   editingLeadId=null;
   document.getElementById('modal-title').textContent='✨ Thêm Khách hàng mới';
   document.getElementById('modal-save-btn').textContent='💾 Lưu';
-  ['f-name','f-phone','f-email','f-area','f-timeline','f-note'].forEach(id=>document.getElementById(id).value='');
+  ['f-name','f-phone','f-email','f-area','f-timeline','f-note','f-next-action','f-next-date'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f-value-tk').value='';
   document.getElementById('f-value-tc').value='';
   document.getElementById('f-score').value='50';
@@ -2316,6 +2321,8 @@ function openEditLead(id){
   updateStageDropdown();
   document.getElementById('f-stage').value=l.stage||'tk_new';
   document.getElementById('f-note').value=l.note||'';
+  document.getElementById('f-next-action').value=l.nextAction||'';
+  document.getElementById('f-next-date').value=l.nextDate||'';
   document.getElementById('modal-overlay').classList.add('open');
   closePanel();
 }
@@ -2331,14 +2338,14 @@ async function saveLead(){
 
   if(editingLeadId){
     const l=leads.find(l=>l.id==editingLeadId); if(!l) return;
-    Object.assign(l,{name,phone,email:document.getElementById('f-email').value,type:document.getElementById('f-type').value,source:document.getElementById('f-source').value,budget:document.getElementById('f-budget').value,valueTk:parseInt(document.getElementById('f-value-tk').value)||l.valueTk||0,valueTc:parseInt(document.getElementById('f-value-tc').value)||l.valueTc||0,area:document.getElementById('f-area').value,timeline:document.getElementById('f-timeline').value,owner:document.getElementById('f-owner').value,score:parseInt(document.getElementById('f-score').value)||50,stage,note:document.getElementById('f-note').value,nextAction:document.getElementById('f-next-action').value,nextDate:document.getElementById('f-next-date').value,lastContact:now});
+    Object.assign(l,{name,phone,email:document.getElementById('f-email').value,type:document.getElementById('f-type').value,source:document.getElementById('f-source').value,budget:document.getElementById('f-budget').value,valueTk:parseInt(document.getElementById('f-value-tk').value)||l.valueTk||0,valueTc:parseInt(document.getElementById('f-value-tc').value)||l.valueTc||0,area:document.getElementById('f-area').value,timeline:document.getElementById('f-timeline').value,owner:document.getElementById('f-owner').value,score:parseInt(document.getElementById('f-score').value)||50,stage,note:document.getElementById('f-note').value,nextAction:(document.getElementById('f-next-action')||{}).value||'',nextDate:(document.getElementById('f-next-date')||{}).value||'',lastContact:now});
     if(!Array.isArray(l.history)) l.history=[];
     l.history.unshift({t:'Cập nhật thông tin KH',time:nowStr()});
     saveLocal(); closeModal(); rerenderCurrent();
     await pushLead(l);
     toast(`✅ Đã cập nhật: ${name}!`);
   } else {
-    const newLead={id:Date.now(),name,phone,email:document.getElementById('f-email').value,type:document.getElementById('f-type').value,source:document.getElementById('f-source').value,budget:document.getElementById('f-budget').value,valueTk:parseInt(document.getElementById('f-value-tk').value)||0,valueTc:parseInt(document.getElementById('f-value-tc').value)||0,area:document.getElementById('f-area').value,timeline:document.getElementById('f-timeline').value,stage,score:parseInt(document.getElementById('f-score').value)||50,owner:document.getElementById('f-owner').value,note:document.getElementById('f-note').value,nextAction:document.getElementById('f-next-action').value,nextDate:document.getElementById('f-next-date').value,created:now,lastContact:now,inBothPipelines:false,history:[{t:`KH mới từ ${document.getElementById('f-source').value}`,time:nowStr()}]};
+    const newLead={id:Date.now(),name,phone,email:document.getElementById('f-email').value,type:document.getElementById('f-type').value,source:document.getElementById('f-source').value,budget:document.getElementById('f-budget').value,valueTk:parseInt(document.getElementById('f-value-tk').value)||0,valueTc:parseInt(document.getElementById('f-value-tc').value)||0,area:document.getElementById('f-area').value,timeline:document.getElementById('f-timeline').value,stage,score:parseInt(document.getElementById('f-score').value)||50,owner:document.getElementById('f-owner').value,note:document.getElementById('f-note').value,nextAction:(document.getElementById('f-next-action')||{}).value||'',nextDate:(document.getElementById('f-next-date')||{}).value||'',created:now,lastContact:now,inBothPipelines:false,history:[{t:`KH mới từ ${document.getElementById('f-source').value}`,time:nowStr()}]};
     leads.unshift(newLead); saveLocal(); closeModal(); rerenderCurrent();
     await pushLead(newLead);
     toast(`✅ Đã thêm: ${name}!`);
