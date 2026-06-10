@@ -975,6 +975,8 @@ function pipeProgress(l){
 
 
 function getPipelineOfStage(stageId){return getPipe(stageId);}
+const SBG={...SBG_TK,...SBG_TC};
+const SC={...SC_TK,...SC_TC};
 function getStageObj(stageId){return STAGES_TK.find(s=>s.id===stageId)||STAGES_TC.find(s=>s.id===stageId)||{label:stageId,color:'#555',badge:''};}
 
 // ══════════════════════════════════════════════════════════════
