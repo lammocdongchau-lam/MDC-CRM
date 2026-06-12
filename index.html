@@ -5,25 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MDC Interior — Sales CRM v6.1</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,300&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
 :root{
-  --navy:#0A1628;--navy2:#152540;--gold:#B8963E;--gold2:#D4AF6A;
-  --goldbg:#F8F3EA;--cream:#FDFAF4;--lgray:#F0EDE7;--mgray:#8A8480;
-  --charcoal:#28374A;--emerald:#0F5132;--lgreen:#E6F4EC;
-  --ruby:#7B1A2B;--lred:#FDEEF1;--sapphire:#0F3460;--lblue:#EBF3FC;
-  --amber:#7A3800;--lorange:#FFF0E0;--purple:#3D0D6E;--lpurple:#F0E8FB;
-  --teal:#0A4D45;--lteal:#E0F4F1;--white:#FFFFFF;
+  --navy:#2B211A;--navy2:#3D2E22;--gold:#B98A3C;--gold2:#B98A3C;
+  --goldbg:#FBF0DC;--cream:#F5F3EF;--lgray:#EFECE6;--mgray:#9C9182;
+  --charcoal:#2B241D;--emerald:#2E7D4F;--lgreen:#E7F2EB;
+  --ruby:#C0392B;--lred:#F9E7E4;--sapphire:#2C6E9E;--lblue:#E5EFF6;
+  --amber:#C77F1A;--lorange:#FBF0DC;--purple:#3D0D6E;--lpurple:#F0E8FB;
+  --teal:#8F6A2B;--lteal:#E0F4F1;--white:#FFFFFF;
   --sidebar-w:240px;--topbar-h:60px;
   /* Pipeline colors */
-  --tk-color:#0F3460;--tc-color:#0A4D45;
+  --tk-color:#3D2E22;--tc-color:#8F6A2B;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--charcoal);display:flex;height:100vh;overflow:hidden}
+body{font-family:'Be Vietnam Pro',sans-serif;background:var(--cream);color:var(--charcoal);display:flex;height:100vh;overflow:hidden}
 .sidebar{width:var(--sidebar-w);background:var(--navy);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;z-index:100}
 .sidebar-brand{padding:20px 20px 14px;border-bottom:1px solid rgba(184,150,62,.2)}
-.brand-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--gold2);letter-spacing:.5px}
-.brand-sub{font-size:10px;color:rgba(212,175,106,.55);letter-spacing:2px;text-transform:uppercase;margin-top:2px;font-family:'DM Mono',monospace}
-.brand-ver{display:flex;align-items:center;gap:5px;margin-top:5px;font-size:9px;font-family:'DM Mono',monospace}
+.brand-title{font-family:'Be Vietnam Pro',sans-serif;font-size:20px;font-weight:600;color:var(--gold2);letter-spacing:.5px}
+.brand-sub{font-size:10px;color:rgba(212,175,106,.55);letter-spacing:2px;text-transform:uppercase;margin-top:2px;font-family:'Be Vietnam Pro',sans-serif}
+.brand-ver{display:flex;align-items:center;gap:5px;margin-top:5px;font-size:9px;font-family:'Be Vietnam Pro',sans-serif}
 .sync-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .sync-dot.green{background:#4ade80;animation:pulse 2s infinite}
 .sync-dot.yellow{background:#facc15;animation:pulse .8s infinite}
@@ -31,12 +31,12 @@ body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--charcoa
 .sync-dot.gray{background:#666}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .sidebar-nav{padding:10px 0;flex:1}
-.nav-section{padding:10px 18px 3px;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(212,175,106,.4);font-family:'DM Mono',monospace}
+.nav-section{padding:10px 18px 3px;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(212,175,106,.4);font-family:'Be Vietnam Pro',sans-serif}
 .nav-item{display:flex;align-items:center;gap:10px;padding:9px 18px;cursor:pointer;color:rgba(255,255,255,.55);font-size:13px;transition:all .2s;border-left:3px solid transparent}
 .nav-item:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.04)}
 .nav-item.active{color:var(--gold2);border-left-color:var(--gold);background:rgba(184,150,62,.08);font-weight:500}
 .nav-item .icon{font-size:15px;width:18px;text-align:center}
-.nav-badge{margin-left:auto;background:var(--ruby);color:#fff;font-size:10px;font-weight:600;padding:1px 6px;border-radius:10px;font-family:'DM Mono',monospace}
+.nav-badge{margin-left:auto;background:var(--ruby);color:#fff;font-size:10px;font-weight:600;padding:1px 6px;border-radius:10px;font-family:'Be Vietnam Pro',sans-serif}
 .sidebar-footer{padding:12px 18px;border-top:1px solid rgba(255,255,255,.07)}
 .user-info{display:flex;align-items:center;gap:10px}
 .user-avatar{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--navy);flex-shrink:0}
@@ -44,9 +44,9 @@ body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--charcoa
 .user-role{font-size:10px;color:rgba(255,255,255,.4)}
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .topbar{height:var(--topbar-h);background:var(--white);border-bottom:1px solid #e8e4de;display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0}
-.page-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--navy);flex:1}
+.page-title{font-family:'Be Vietnam Pro',sans-serif;font-size:22px;font-weight:600;color:var(--navy);flex:1}
 .topbar-actions{display:flex;gap:8px;align-items:center}
-.btn{padding:7px 14px;border-radius:6px;font-size:12.5px;font-weight:500;cursor:pointer;border:none;font-family:'Outfit',sans-serif;transition:all .18s;display:flex;align-items:center;gap:5px}
+.btn{padding:7px 14px;border-radius:6px;font-size:12.5px;font-weight:500;cursor:pointer;border:none;font-family:'Be Vietnam Pro',sans-serif;transition:all .18s;display:flex;align-items:center;gap:5px}
 .btn-primary{background:var(--navy);color:var(--gold2)}.btn-primary:hover{background:var(--navy2)}
 .btn-outline{background:transparent;border:1.5px solid #d4c9b8;color:var(--charcoal)}.btn-outline:hover{border-color:var(--gold);color:var(--amber)}
 .btn-sm{padding:5px 10px;font-size:11.5px}
@@ -55,9 +55,9 @@ body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--charcoa
 .btn-tk{background:var(--tk-color);color:#fff}
 .btn-tc{background:var(--tc-color);color:#fff}
 .search-bar{display:flex;align-items:center;background:var(--lgray);border:1.5px solid #e0dbd3;border-radius:7px;padding:6px 11px;gap:7px;width:210px}
-.search-bar input{border:none;background:transparent;font-family:'Outfit',sans-serif;font-size:12.5px;color:var(--charcoal);width:100%;outline:none}
+.search-bar input{border:none;background:transparent;font-family:'Be Vietnam Pro',sans-serif;font-size:12.5px;color:var(--charcoal);width:100%;outline:none}
 .content{flex:1;overflow-y:auto;padding:20px 22px}
-.sync-banner{padding:8px 20px;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-family:'DM Mono',monospace;flex-shrink:0}
+.sync-banner{padding:8px 20px;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-family:'Be Vietnam Pro',sans-serif;flex-shrink:0}
 .sync-banner.connected{background:#f0fdf4;border-bottom:1px solid #bbf7d0;color:var(--emerald)}
 .sync-banner.syncing{background:#fefce8;border-bottom:1px solid #fef08a;color:#713f12}
 .sync-banner.error{background:var(--lred);border-bottom:1px solid #fecaca;color:var(--ruby)}
@@ -66,12 +66,12 @@ body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--charcoa
 
 /* PIPELINE SWITCHER */
 .pipeline-switcher{display:flex;gap:0;border-radius:10px;overflow:hidden;border:1.5px solid #e0dbd3;margin-bottom:20px;background:var(--white)}
-.ps-btn{flex:1;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Outfit',sans-serif;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--mgray);background:var(--white)}
+.ps-btn{flex:1;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Be Vietnam Pro',sans-serif;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--mgray);background:var(--white)}
 .ps-btn:first-child{border-right:1px solid #e0dbd3}
 .ps-btn.active-tk{background:var(--tk-color);color:#fff}
 .ps-btn.active-tc{background:var(--tc-color);color:#fff}
 .ps-btn:not(.active-tk):not(.active-tc):hover{background:var(--lgray)}
-.ps-count{background:rgba(255,255,255,.25);border-radius:10px;padding:1px 7px;font-size:10px;font-family:'DM Mono',monospace}
+.ps-count{background:rgba(255,255,255,.25);border-radius:10px;padding:1px 7px;font-size:10px;font-family:'Be Vietnam Pro',sans-serif}
 .ps-btn:not(.active-tk):not(.active-tc) .ps-count{background:var(--lgray);color:var(--charcoal)}
 
 /* PIPELINE HEADER INDICATOR */
@@ -91,7 +91,7 @@ body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--charcoa
 .stat-card{background:var(--white);border:1px solid #e8e4de;border-radius:10px;padding:14px;position:relative;overflow:hidden}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--gold))}
 .stat-label{font-size:10.5px;color:var(--mgray);font-weight:500;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.stat-value{font-size:24px;font-weight:700;color:var(--navy);line-height:1;font-family:'DM Mono',monospace}
+.stat-value{font-size:24px;font-weight:700;color:var(--navy);line-height:1;font-family:'Be Vietnam Pro',sans-serif}
 .stat-sub{font-size:10.5px;color:var(--mgray);margin-top:4px}
 .stat-sub .up{color:var(--emerald);font-weight:600}
 .table-wrap{background:var(--white);border:1px solid #e8e4de;border-radius:12px;overflow:hidden}
@@ -107,7 +107,7 @@ td{padding:10px 13px;font-size:12.5px;vertical-align:middle}
 /* TK Stages badges */
 .badge-tk-new{background:#EEF3FB;color:#0F3460}
 .badge-tk-consult{background:#F0E8FB;color:#3D0D6E}
-.badge-tk-survey{background:#E0F4F1;color:#0A4D45}
+.badge-tk-survey{background:#E0F4F1;color:#8F6A2B}
 .badge-tk-quote_tk{background:#FFF0E0;color:#7A3800}
 .badge-tk-sign_tk{background:#E6F4EC;color:#0F5132}
 .badge-tk-design{background:#EBF3FC;color:#0F3460}
@@ -117,7 +117,7 @@ td{padding:10px 13px;font-size:12.5px;vertical-align:middle}
 .badge-tk-lost{background:#F5F5F5;color:#666}
 
 /* TC Stages badges */
-.badge-tc-new{background:#E0F4F1;color:#0A4D45}
+.badge-tc-new{background:#E0F4F1;color:#8F6A2B}
 .badge-tc-consult{background:#EBF3FC;color:#1A5C87}
 .badge-tc-survey{background:#F0E8FB;color:#3D0D6E}
 .badge-tc-quote_tc{background:#FFF0E0;color:#7A3800}
@@ -130,7 +130,7 @@ td{padding:10px 13px;font-size:12.5px;vertical-align:middle}
 .score-bar{display:flex;align-items:center;gap:6px}
 .score-track{width:46px;height:4px;background:#e8e4de;border-radius:3px;overflow:hidden}
 .score-fill{height:100%;border-radius:3px}
-.score-num{font-size:10.5px;font-weight:600;font-family:'DM Mono',monospace}
+.score-num{font-size:10.5px;font-weight:600;font-family:'Be Vietnam Pro',sans-serif}
 .action-row{display:flex;gap:4px}
 .icon-btn{width:26px;height:26px;background:var(--lgray);border:none;border-radius:5px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .15s;color:var(--mgray)}
 .icon-btn:hover{background:var(--goldbg);color:var(--amber)}
@@ -139,11 +139,11 @@ td{padding:10px 13px;font-size:12.5px;vertical-align:middle}
 .pipeline-board{display:flex;gap:9px;overflow-x:auto;padding-bottom:8px}
 .pipeline-col{min-width:145px;flex-shrink:0}
 .pipeline-header{padding:7px 9px;border-radius:7px 7px 0 0;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--white);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
-.pipeline-count{background:rgba(255,255,255,.25);border-radius:10px;padding:1px 6px;font-family:'DM Mono',monospace;font-size:10px}
+.pipeline-count{background:rgba(255,255,255,.25);border-radius:10px;padding:1px 6px;font-family:'Be Vietnam Pro',sans-serif;font-size:10px}
 .pipeline-card{background:var(--white);border:1px solid #e8e4de;border-radius:7px;padding:9px 10px;margin-bottom:7px;cursor:pointer;transition:all .18s;border-left:3px solid var(--sc,#ccc)}
 .pipeline-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
 .pc-name{font-size:12px;font-weight:600;color:var(--charcoal);margin-bottom:3px}
-.pc-value{font-size:10.5px;color:var(--amber);font-weight:600;font-family:'DM Mono',monospace}
+.pc-value{font-size:10.5px;color:var(--amber);font-weight:600;font-family:'Be Vietnam Pro',sans-serif}
 .pc-meta{display:flex;align-items:center;justify-content:space-between;margin-top:5px}
 .pc-owner{width:18px;height:18px;border-radius:50%;font-size:8px;font-weight:700;color:white;display:flex;align-items:center;justify-content:center}
 .pc-pipe-tag{font-size:8px;padding:1px 5px;border-radius:8px;font-weight:600}
@@ -160,7 +160,7 @@ td{padding:10px 13px;font-size:12.5px;vertical-align:middle}
 .panel-header{padding:18px 20px 14px;border-bottom:1px solid #e8e4de;background:var(--navy);position:relative}
 .panel-close{position:absolute;top:14px;right:14px;width:28px;height:28px;background:rgba(255,255,255,.12);border:none;border-radius:50%;cursor:pointer;color:rgba(255,255,255,.7);font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .panel-close:hover{background:rgba(255,255,255,.22);color:white}
-.panel-lead-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--gold2);margin-bottom:3px}
+.panel-lead-name{font-family:'Be Vietnam Pro',sans-serif;font-size:20px;font-weight:600;color:var(--gold2);margin-bottom:3px}
 .panel-lead-sub{font-size:11px;color:rgba(255,255,255,.5)}
 .panel-body{flex:1;overflow-y:auto;padding:16px 20px}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
@@ -173,7 +173,7 @@ td{padding:10px 13px;font-size:12.5px;vertical-align:middle}
 .tl-dot::after{content:'';position:absolute;top:9px;left:50%;transform:translateX(-50%);width:1px;height:calc(100% + 3px);background:#e8e4de}
 .tl-item:last-child .tl-dot::after{display:none}
 .tl-text{font-size:12.5px;color:var(--charcoal);line-height:1.5}
-.tl-time{font-size:10.5px;color:var(--mgray);margin-top:2px;font-family:'DM Mono',monospace}
+.tl-time{font-size:10.5px;color:var(--mgray);margin-top:2px;font-family:'Be Vietnam Pro',sans-serif}
 
 /* STAGE SELECTOR in panel */
 .stage-selector{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:16px}
@@ -192,14 +192,14 @@ td{padding:10px 13px;font-size:12.5px;vertical-align:middle}
 .modal-lg{width:680px}
 @keyframes slideUp{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
 .modal-header{padding:20px 22px 14px;border-bottom:1px solid #e8e4de;display:flex;align-items:center;justify-content:space-between}
-.modal-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--navy)}
+.modal-title{font-family:'Be Vietnam Pro',sans-serif;font-size:19px;font-weight:600;color:var(--navy)}
 .modal-body{padding:18px 22px}
 .modal-footer{padding:12px 22px 18px;display:flex;justify-content:flex-end;gap:9px;border-top:1px solid #f0ebe3}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .form-group{display:flex;flex-direction:column;gap:4px}
 .form-group.full{grid-column:1/-1}
 .form-label{font-size:11px;font-weight:600;color:var(--charcoal)}
-.form-input{border:1.5px solid #e0dbd3;border-radius:7px;padding:8px 11px;font-family:'Outfit',sans-serif;font-size:12.5px;color:var(--charcoal);outline:none;transition:border-color .15s;background:var(--cream)}
+.form-input{border:1.5px solid #e0dbd3;border-radius:7px;padding:8px 11px;font-family:'Be Vietnam Pro',sans-serif;font-size:12.5px;color:var(--charcoal);outline:none;transition:border-color .15s;background:var(--cream)}
 .form-input:focus{border-color:var(--gold);background:var(--white)}
 select.form-input{cursor:pointer}
 textarea.form-input{resize:vertical;height:65px}
@@ -231,11 +231,11 @@ textarea.form-input{resize:vertical;height:65px}
 .funnel-label{font-size:10.5px;color:var(--mgray);width:110px;flex-shrink:0}
 .funnel-bar-wrap{flex:1;height:18px;background:#f0ece6;border-radius:4px;overflow:hidden}
 .funnel-bar{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:7px;font-size:9.5px;font-weight:600;color:white}
-.funnel-num{font-size:11px;font-weight:700;color:var(--charcoal);width:28px;text-align:right;font-family:'DM Mono',monospace}
+.funnel-num{font-size:11px;font-weight:700;color:var(--charcoal);width:28px;text-align:right;font-family:'Be Vietnam Pro',sans-serif}
 .bar-group{margin-bottom:9px}
 .bar-label-row{display:flex;justify-content:space-between;margin-bottom:3px}
 .bar-label{font-size:11.5px;color:var(--charcoal)}
-.bar-amount{font-size:11.5px;font-weight:600;color:var(--amber);font-family:'DM Mono',monospace}
+.bar-amount{font-size:11.5px;font-weight:600;color:var(--amber);font-family:'Be Vietnam Pro',sans-serif}
 .bar-track{height:7px;background:#f0ece6;border-radius:4px;overflow:hidden}
 .bar-fill{height:100%;border-radius:4px}
 
@@ -253,7 +253,7 @@ textarea.form-input{resize:vertical;height:65px}
 
 /* NOTE */
 .note-input{display:flex;gap:7px;margin-top:8px}
-.note-input textarea{flex:1;border:1.5px solid #e0dbd3;border-radius:7px;padding:8px 11px;font-family:'Outfit',sans-serif;font-size:12.5px;color:var(--charcoal);resize:none;height:65px;outline:none;transition:border-color .15s}
+.note-input textarea{flex:1;border:1.5px solid #e0dbd3;border-radius:7px;padding:8px 11px;font-family:'Be Vietnam Pro',sans-serif;font-size:12.5px;color:var(--charcoal);resize:none;height:65px;outline:none;transition:border-color .15s}
 .note-input textarea:focus{border-color:var(--gold)}
 
 ::-webkit-scrollbar{width:5px;height:5px}
@@ -300,23 +300,23 @@ textarea.form-input{resize:vertical;height:65px}
 .login-screen{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:9999}
 .login-screen.hidden{display:none}
 .login-card{background:var(--white);border-radius:18px;padding:40px 44px;width:400px;box-shadow:0 24px 80px rgba(0,0,0,.4)}
-.login-logo{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--navy);margin-bottom:4px}
-.login-sub{font-size:11px;color:var(--mgray);letter-spacing:2px;text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:28px}
+.login-logo{font-family:'Be Vietnam Pro',sans-serif;font-size:26px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.login-sub{font-size:11px;color:var(--mgray);letter-spacing:2px;text-transform:uppercase;font-family:'Be Vietnam Pro',sans-serif;margin-bottom:28px}
 .login-form-group{margin-bottom:14px}
 .login-label{font-size:11px;font-weight:600;color:var(--charcoal);margin-bottom:5px;display:block}
-.login-input{width:100%;border:1.5px solid #e0dbd3;border-radius:8px;padding:10px 13px;font-family:'Outfit',sans-serif;font-size:13px;color:var(--charcoal);outline:none;transition:border-color .15s;background:var(--cream)}
+.login-input{width:100%;border:1.5px solid #e0dbd3;border-radius:8px;padding:10px 13px;font-family:'Be Vietnam Pro',sans-serif;font-size:13px;color:var(--charcoal);outline:none;transition:border-color .15s;background:var(--cream)}
 .login-input:focus{border-color:var(--gold);background:var(--white)}
-.login-btn{width:100%;padding:12px;border-radius:8px;background:var(--navy);color:var(--gold2);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;border:none;margin-top:8px;transition:all .18s}
+.login-btn{width:100%;padding:12px;border-radius:8px;background:var(--navy);color:var(--gold2);font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:600;cursor:pointer;border:none;margin-top:8px;transition:all .18s}
 .login-btn:hover{background:var(--navy2)}
 .login-error{background:var(--lred);border:1px solid #fecaca;color:var(--ruby);border-radius:7px;padding:9px 13px;font-size:12px;margin-top:10px;display:none}
 .login-error.show{display:block}
 /* ── ROLE/PERMISSION ── */
 .role-admin{background:#FFF0E0;color:#7A3800;border:1px solid #f0c894}
 .role-manager{background:#EBF3FC;color:#0F3460;border:1px solid #b8d4f0}
-.role-staff{background:#E0F4F1;color:#0A4D45;border:1px solid #a7d9d3}
+.role-staff{background:#E0F4F1;color:#8F6A2B;border:1px solid #a7d9d3}
 .nav-item.hidden-nav{display:none}
 .permission-locked{display:flex;align-items:center;gap:8px;background:var(--lred);border:1px solid #fecaca;border-radius:8px;padding:10px 14px;font-size:12px;color:var(--ruby);margin-bottom:12px}
-.logout-btn{margin-top:8px;width:100%;padding:6px;border-radius:6px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);font-size:11px;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .15s;text-align:center}
+.logout-btn{margin-top:8px;width:100%;padding:6px;border-radius:6px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);font-size:11px;cursor:pointer;font-family:'Be Vietnam Pro',sans-serif;transition:all .15s;text-align:center}
 .logout-btn:hover{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
 /* ── STAFF CARDS ── */
 .staff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
@@ -340,7 +340,7 @@ textarea.form-input{resize:vertical;height:65px}
 .task-kh-avatar{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
 .task-kh-name{font-size:12.5px;font-weight:600;color:var(--charcoal);line-height:1.3}
 .task-kh-meta{font-size:10.5px;color:var(--mgray)}
-.task-kh-count{margin-left:auto;background:var(--ruby);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;font-family:'DM Mono',monospace;flex-shrink:0}
+.task-kh-count{margin-left:auto;background:var(--ruby);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;font-family:'Be Vietnam Pro',sans-serif;flex-shrink:0}
 .task-kh-count.zero{background:var(--lgray);color:var(--mgray)}
 .task-main-panel{display:flex;flex-direction:column;gap:12px}
 .task-kh-header{background:var(--white);border:1px solid #e8e4de;border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:12px}
@@ -360,7 +360,7 @@ textarea.form-input{resize:vertical;height:65px}
 .task-row-text{font-size:12.5px;color:var(--charcoal);font-weight:500}
 .task-row-text.done{text-decoration:line-through;color:var(--mgray)}
 .task-row-meta{display:flex;align-items:center;gap:10px;margin-top:3px;flex-wrap:wrap}
-.task-row-date{font-size:10.5px;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:4px}
+.task-row-date{font-size:10.5px;font-family:'Be Vietnam Pro',sans-serif;display:flex;align-items:center;gap:4px}
 .task-row-date.overdue{color:var(--ruby);font-weight:600}
 .task-row-date.today{color:var(--amber);font-weight:600}
 .task-row-date.upcoming{color:var(--mgray)}
@@ -369,13 +369,27 @@ textarea.form-input{resize:vertical;height:65px}
 .task-type-tag{font-size:9.5px;padding:1px 7px;border-radius:10px;font-weight:600}
 .task-row-actions{display:flex;gap:4px;flex-shrink:0;opacity:0;transition:opacity .15s}
 .task-row:hover .task-row-actions{opacity:1}
+/* Nhận/Giao việc — LUÔN hiện (kể cả mobile không có hover) */
+.task-global-row .task-row-actions{opacity:1}
+.claim-btn,.assign-btn{width:auto;padding:0 9px;gap:3px;font-size:11px;font-weight:600;white-space:nowrap}
+.claim-btn{background:var(--gold,#B98A3C);color:#2B211A}
+.assign-btn{background:var(--lgray);color:var(--charcoal,#333)}
+.task-claimed-tag{font-size:9.5px;background:#dcfce7;color:#15803d;padding:1px 7px;border-radius:8px;font-weight:700;white-space:nowrap}
+.task-global-row.is-claimed{background:rgba(34,197,94,.04)}
+/* Hộp chọn nhân viên khi giao việc */
+#assign-menu{position:fixed;inset:0;background:rgba(10,22,40,.45);display:flex;align-items:center;justify-content:center;z-index:9999}
+.assign-menu-inner{background:#fff;border-radius:12px;padding:14px;min-width:240px;max-height:70vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.assign-menu-title{font-weight:700;font-size:13px;margin-bottom:8px;color:var(--charcoal,#333)}
+.assign-opt{display:block;width:100%;text-align:left;padding:10px 12px;margin:3px 0;border:1px solid #eee;border-radius:8px;background:#fafafa;cursor:pointer;font-size:13px}
+.assign-opt:hover{background:var(--gold,#B98A3C);color:#2B211A}
+.assign-opt.cancel{background:#fff;color:var(--mgray,#888);margin-top:8px}
 /* Global task view */
 .task-global-row{display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:8px;background:var(--white);border:1px solid #e8e4de;margin-bottom:6px;transition:all .15s}
 .task-global-row:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .task-kh-pill{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
 /* Date input style */
-input[type="date"].form-input{font-family:'DM Mono',monospace;font-size:12px}
-input[type="time"].form-input{font-family:'DM Mono',monospace;font-size:12px}
+input[type="date"].form-input{font-family:'Be Vietnam Pro',sans-serif;font-size:12px}
+input[type="time"].form-input{font-family:'Be Vietnam Pro',sans-serif;font-size:12px}
 @media(max-width:768px){.task-board{grid-template-columns:1fr!important}.task-sidebar-panel{position:static}}
 
 /* ── CARE / ALERT SYSTEM ── */
@@ -385,7 +399,7 @@ input[type="time"].form-input{font-family:'DM Mono',monospace;font-size:12px}
 .alert-card.danger{background:linear-gradient(135deg,#7B1A2B,#9d2438)}
 .alert-card.warn{background:linear-gradient(135deg,#7A3800,#a04d0a)}
 .alert-card.info{background:linear-gradient(135deg,#0F3460,#1a5c87)}
-.alert-card .ac-num{font-size:30px;font-weight:700;font-family:'DM Mono',monospace;line-height:1}
+.alert-card .ac-num{font-size:30px;font-weight:700;font-family:'Be Vietnam Pro',sans-serif;line-height:1}
 .alert-card .ac-label{font-size:11.5px;font-weight:600;margin-top:4px;opacity:.95}
 .alert-card .ac-sub{font-size:10px;opacity:.75;margin-top:2px}
 .alert-card .ac-icon{position:absolute;right:12px;top:12px;font-size:22px;opacity:.35}
@@ -394,7 +408,7 @@ input[type="time"].form-input{font-family:'DM Mono',monospace;font-size:12px}
 .care-item:hover{background:#fbf8f3}
 .care-item:last-child{border-bottom:none}
 .care-avatar{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;color:white}
-.care-days{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;font-family:'DM Mono',monospace;white-space:nowrap}
+.care-days{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;font-family:'Be Vietnam Pro',sans-serif;white-space:nowrap}
 .care-days.hot{background:var(--lred);color:var(--ruby)}
 .care-days.warm{background:var(--lorange);color:var(--amber)}
 .care-days.cool{background:var(--lgray);color:var(--mgray)}
@@ -426,7 +440,7 @@ input[type="time"].form-input{font-family:'DM Mono',monospace;font-size:12px}
 /* Agenda timeline (today) */
 .agenda-item{display:flex;gap:12px;padding:10px 16px;border-bottom:1px solid #f5f1eb}
 .agenda-item:last-child{border-bottom:none}
-.agenda-time{font-size:11px;font-family:'DM Mono',monospace;font-weight:600;color:var(--navy);width:48px;flex-shrink:0;padding-top:1px}
+.agenda-time{font-size:11px;font-family:'Be Vietnam Pro',sans-serif;font-weight:600;color:var(--navy);width:48px;flex-shrink:0;padding-top:1px}
 .agenda-line{width:2px;background:#e8e4de;border-radius:2px;flex-shrink:0;position:relative}
 .agenda-line::before{content:'';position:absolute;top:2px;left:-3px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
 .agenda-content{flex:1;padding-bottom:2px}
@@ -616,7 +630,7 @@ input[type="time"].form-input{font-family:'DM Mono',monospace;font-size:12px}
           <select class="form-input" id="sf-color">
             <option value="#0F3460">🔵 Navy</option><option value="#0F5132">🟢 Emerald</option>
             <option value="#3D0D6E">🟣 Purple</option><option value="#7B1A2B">🔴 Ruby</option>
-            <option value="#7A3800">🟠 Amber</option><option value="#0A4D45">🩵 Teal</option>
+            <option value="#7A3800">🟠 Amber</option><option value="#8F6A2B">🩵 Teal</option>
             <option value="#5C3317">🟤 Brown</option>
           </select>
         </div>
@@ -889,7 +903,7 @@ const LS_SET_KEY = 'mdc_crm_settings';
 const STAGES_TK = [
   {id:'tk_new',      label:'Mới',               color:'#0F3460', badge:'badge-tk-new'},
   {id:'tk_consult',  label:'Tư vấn',            color:'#3D0D6E', badge:'badge-tk-consult'},
-  {id:'tk_survey',   label:'Khảo sát',          color:'#0A4D45', badge:'badge-tk-survey'},
+  {id:'tk_survey',   label:'Khảo sát',          color:'#8F6A2B', badge:'badge-tk-survey'},
   {id:'tk_quote_tk', label:'Báo giá TK',        color:'#7A3800', badge:'badge-tk-quote_tk'},
   {id:'tk_sign_tk',  label:'Ký HĐ TK',          color:'#0F5132', badge:'badge-tk-sign_tk'},
   {id:'tk_design',   label:'Triển khai TK',     color:'#1A5C87', badge:'badge-tk-design'},
@@ -901,7 +915,7 @@ const STAGES_TK = [
 
 // ── Pipeline Thi công ─────────────────────────────────────────
 const STAGES_TC = [
-  {id:'tc_new',      label:'Mới',               color:'#0A4D45', badge:'badge-tc-new'},
+  {id:'tc_new',      label:'Mới',               color:'#8F6A2B', badge:'badge-tc-new'},
   {id:'tc_consult',  label:'Tư vấn',            color:'#1A5C87', badge:'badge-tc-consult'},
   {id:'tc_survey',   label:'Khảo sát',          color:'#3D0D6E', badge:'badge-tc-survey'},
   {id:'tc_quote_tc', label:'Báo giá TC',        color:'#7A3800', badge:'badge-tc-quote_tc'},
@@ -915,8 +929,8 @@ const STAGES_TC = [
 // Color maps
 const SBG_TK = {tk_new:'#EEF3FB',tk_consult:'#F0E8FB',tk_survey:'#E0F4F1',tk_quote_tk:'#FFF0E0',tk_sign_tk:'#E6F4EC',tk_design:'#EBF3FC',tk_handover:'#F0E8FB',tk_quote_tc:'#FFF0E0',tk_accept:'#E6F4EC',tk_lost:'#F5F5F5'};
 const SBG_TC = {tc_new:'#E0F4F1',tc_consult:'#EBF3FC',tc_survey:'#F0E8FB',tc_quote_tc:'#FFF0E0',tc_sign_tc:'#E6F4EC',tc_docs:'#FFF0E0',tc_construct:'#FDEEF1',tc_handover:'#E6F4EC',tc_lost:'#F5F5F5'};
-const SC_TK  = {tk_new:'#0F3460',tk_consult:'#3D0D6E',tk_survey:'#0A4D45',tk_quote_tk:'#7A3800',tk_sign_tk:'#0F5132',tk_design:'#1A5C87',tk_handover:'#3D0D6E',tk_quote_tc:'#6B3400',tk_accept:'#0F5132',tk_lost:'#555'};
-const SC_TC  = {tc_new:'#0A4D45',tc_consult:'#1A5C87',tc_survey:'#3D0D6E',tc_quote_tc:'#7A3800',tc_sign_tc:'#0F5132',tc_docs:'#6B3400',tc_construct:'#7B1A2B',tc_handover:'#0F5132',tc_lost:'#555'};
+const SC_TK  = {tk_new:'#0F3460',tk_consult:'#3D0D6E',tk_survey:'#8F6A2B',tk_quote_tk:'#7A3800',tk_sign_tk:'#0F5132',tk_design:'#1A5C87',tk_handover:'#3D0D6E',tk_quote_tc:'#6B3400',tk_accept:'#0F5132',tk_lost:'#555'};
+const SC_TC  = {tc_new:'#8F6A2B',tc_consult:'#1A5C87',tc_survey:'#3D0D6E',tc_quote_tc:'#7A3800',tc_sign_tc:'#0F5132',tc_docs:'#6B3400',tc_construct:'#7B1A2B',tc_handover:'#0F5132',tc_lost:'#555'};
 
 function getStages(pipeline){ return pipeline==='tc'?STAGES_TC:STAGES_TK; }
 function getSBG(stage){ return SBG_TK[stage]||SBG_TC[stage]||'#F5F5F5'; }
@@ -1213,12 +1227,11 @@ async function apiFetch(params){
   const url=getApiUrl();
   if(!url) throw new Error('API URL chưa cài đặt');
   console.log('📡 apiFetch called with:', params);
+  // KHÔNG đặt custom header (Accept/Content-Type) và KHÔNG đặt mode:'cors'
+  // → tránh CORS preflight OPTIONS mà Google Apps Script không xử lý được.
   const res=await fetch(url+'?'+new URLSearchParams(params).toString(),{
     method:'GET',
-    redirect:'follow',
-    mode:'cors',
-    credentials:'omit',
-    headers:{'Accept':'application/json'}
+    redirect:'follow'
   });
   if(!res.ok) throw new Error('HTTP '+res.status);
   const json=await res.json();
@@ -1231,12 +1244,10 @@ async function apiPost(body){
   const url=getApiUrl();
   if(!url) throw new Error('API URL chưa cài đặt');
   console.log('📤 apiPost called with action:', body.action);
+  // Giữ request đơn giản, không custom header → tránh CORS preflight.
   const res=await fetch(url+'?'+new URLSearchParams({action:body.action,payload:JSON.stringify(body)}).toString(),{
     method:'GET',
-    redirect:'follow',
-    mode:'cors',
-    credentials:'omit',
-    headers:{'Accept':'application/json'}
+    redirect:'follow'
   });
   if(!res.ok) throw new Error('HTTP '+res.status);
   const json=await res.json();
@@ -1277,6 +1288,52 @@ async function pushLead(lead){if(!getApiUrl()) return;try{await apiPost({action:
 async function removeLead(id){if(!getApiUrl()) return;try{await apiPost({action:'deleteLead',id});}catch(e){}}
 async function pushTask(task){if(!getApiUrl()) return;try{await apiPost({action:'saveTask',task});}catch(e){}}
 async function removeTask(id){if(!getApiUrl()) return;try{await apiPost({action:'deleteTask',id});}catch(e){}}
+
+// ── NHẬN / GIAO VIỆC ─────────────────────────────────────────
+// Nhân viên tự nhận việc cho mình (biến task mẫu gợi ý thành việc quản lý)
+async function claimTask(id, event){
+  if(event) event.stopPropagation();
+  const t = tasks.find(x=>String(x.id)===String(id));
+  if(!t) return;
+  t.claimed = true;
+  t.assignee = currentUser.id;            // người làm = người đang đăng nhập
+  t.assignedBy = currentUser.name;        // tự nhận → người giao chính là họ
+  saveLocal(); renderTasks(); updateBadges();
+  await pushTask(t);
+  toast('✅ Đã nhận việc: '+(t.text||'').slice(0,30)+'…','✅');
+}
+
+// Cấp trên giao việc cho một nhân viên cụ thể
+async function assignTaskTo(id, staffId, event){
+  if(event) event.stopPropagation();
+  const t = tasks.find(x=>String(x.id)===String(id));
+  if(!t) return;
+  t.claimed = true;
+  t.assignee = staffId;                   // người làm = người được giao
+  t.assignedBy = currentUser.name;        // người giao = cấp trên đang đăng nhập
+  saveLocal(); renderTasks(); updateBadges();
+  await pushTask(t);
+  const who = (loadStaffList().find(s=>s.id===staffId)||{}).name || '';
+  toast('✅ Đã giao việc cho '+who,'✅');
+}
+
+// Mở hộp chọn nhân viên để giao việc (chỉ cấp quản lý thấy)
+function openAssignMenu(id, event){
+  if(event) event.stopPropagation();
+  const staff = loadStaffList();
+  const opts = staff.map(s=>`<button class="assign-opt" onclick="assignTaskTo('${id}','${s.id}',event);closeAssignMenu()">${s.name}</button>`).join('');
+  let box=document.getElementById('assign-menu');
+  if(box) box.remove();
+  box=document.createElement('div');
+  box.id='assign-menu';
+  box.innerHTML=`<div class="assign-menu-inner">
+    <div class="assign-menu-title">Giao việc cho:</div>${opts}
+    <button class="assign-opt cancel" onclick="closeAssignMenu()">✕ Hủy</button>
+  </div>`;
+  box.onclick=(e)=>{if(e.target===box)closeAssignMenu();};
+  document.body.appendChild(box);
+}
+function closeAssignMenu(){const b=document.getElementById('assign-menu');if(b)b.remove();}
 async function pushStaff(arr){if(!getApiUrl()) return;try{await apiPost({action:'saveStaff',staff:arr});}catch(e){}}
 
 // ══ Ghi nhật ký thao tác nhân viên lên Sheets ══
@@ -1380,7 +1437,7 @@ function renderDashboard(){
 
   document.getElementById('page-content').innerHTML = `
     <div style="margin-bottom:18px">
-      <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--navy)">${greeting}, ${firstName} 👋</div>
+      <div style="font-family:'Be Vietnam Pro',sans-serif;font-size:24px;font-weight:600;color:var(--navy)">${greeting}, ${firstName} 👋</div>
       <div style="font-size:13px;color:var(--mgray);margin-top:2px">${new Date().toLocaleDateString('vi-VN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})} · ${todayTasks.length} việc hôm nay${overdueTasks.length?` · <span style="color:var(--ruby);font-weight:600">${overdueTasks.length} việc quá hạn</span>`:''}</div>
     </div>
 
@@ -1487,7 +1544,7 @@ function renderDashboard(){
         ${STAGES_TK.filter(s=>!['tk_lost'].includes(s.id)).map(s=>{const n=vl.filter(l=>l.stage===s.id).length;const pct=tkL.length?Math.round(n/tkL.length*100):0;return n?`<div class="funnel-row"><div class="funnel-label">${s.label}</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${Math.max(pct,3)}%;background:${s.color}"></div></div><div class="funnel-num">${n}</div></div>`:'';}).join('')||'<div class="empty-state" style="padding:16px">Chưa có KH</div>'}
       </div>
       <div class="chart-card">
-        <div class="chart-title" style="display:flex;align-items:center;gap:8px"><span style="background:#E0F4F1;color:#0A4D45;padding:3px 9px;border-radius:20px;font-size:10.5px;font-weight:700">🔨 THI CÔNG</span>${tcA.length} active · ${formatShort(tcA.reduce((s,l)=>s+(Number(l.valueTc)||0),0))}</div>
+        <div class="chart-title" style="display:flex;align-items:center;gap:8px"><span style="background:#E0F4F1;color:#8F6A2B;padding:3px 9px;border-radius:20px;font-size:10.5px;font-weight:700">🔨 THI CÔNG</span>${tcA.length} active · ${formatShort(tcA.reduce((s,l)=>s+(Number(l.valueTc)||0),0))}</div>
         ${STAGES_TC.filter(s=>!['tc_lost'].includes(s.id)).map(s=>{const n=vl.filter(l=>l.stage===s.id).length;const pct=tcL.length?Math.round(n/tcL.length*100):0;return n?`<div class="funnel-row"><div class="funnel-label">${s.label}</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${Math.max(pct,3)}%;background:${s.color}"></div></div><div class="funnel-num">${n}</div></div>`:'';}).join('')||'<div class="empty-state" style="padding:16px">Chưa có KH</div>'}
       </div>
     </div>`;
@@ -1597,13 +1654,13 @@ function renderLeads(){
           const pipe=getPipelineOfStage(l.stage||'tk_new');
           const sc=l.score>=80?'#0F5132':l.score>=60?'#7A3800':'#7B1A2B';
           return`<tr onclick="openPanel(${l.id})">
-            <td style="color:var(--mgray);font-family:'DM Mono',monospace;font-size:10.5px">${i+1}</td>
+            <td style="color:var(--mgray);font-family:'Be Vietnam Pro',sans-serif;font-size:10.5px">${i+1}</td>
             <td><div style="display:flex;align-items:center;gap:6px"><span class="health-dot ${leadHealth(l)}" title="${healthLabel(leadHealth(l))}"></span><div><div style="font-weight:600;font-size:12.5px">${l.name}</div><div style="font-size:10.5px;color:var(--mgray)">${l.nextAction?'👉 '+l.nextAction:(l.area||'–')}</div></div></div></td>
-            <td style="font-family:'DM Mono',monospace;font-size:11.5px">${l.phone}</td>
+            <td style="font-family:'Be Vietnam Pro',sans-serif;font-size:11.5px">${l.phone}</td>
             <td style="font-size:12px">${l.type||'–'}</td>
-            <td><span style="font-size:9.5px;padding:3px 8px;border-radius:10px;font-weight:600;background:${pipe==='tc'?'#E0F4F1':'#EBF3FC'};color:${pipe==='tc'?'#0A4D45':'#0F3460'}">${pipe==='tc'?'🔨 TC':'🎨 TK'}</span>${l.inBothPipelines?` <span style="font-size:9px;padding:2px 5px;border-radius:8px;background:#FFF0E0;color:#7A3800">+TC</span>`:''}</td>
+            <td><span style="font-size:9.5px;padding:3px 8px;border-radius:10px;font-weight:600;background:${pipe==='tc'?'#E0F4F1':'#EBF3FC'};color:${pipe==='tc'?'#8F6A2B':'#0F3460'}">${pipe==='tc'?'🔨 TC':'🎨 TK'}</span>${l.inBothPipelines?` <span style="font-size:9px;padding:2px 5px;border-radius:8px;background:#FFF0E0;color:#7A3800">+TC</span>`:''}</td>
             <td><span class="badge ${st.badge}">${st.label}</span></td>
-            <td style="font-weight:600;color:var(--amber);font-family:'DM Mono',monospace;font-size:11.5px">${formatShort(Number(l.valueTc||l.valueTk)||0)}</td>
+            <td style="font-weight:600;color:var(--amber);font-family:'Be Vietnam Pro',sans-serif;font-size:11.5px">${formatShort(Number(l.valueTc||l.valueTk)||0)}</td>
             <td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:${l.score||0}%;background:${sc}"></div></div><div class="score-num">${l.score||0}</div></div></td>
             <td><div style="display:flex;align-items:center;gap:5px"><div style="width:22px;height:22px;border-radius:50%;background:${staffColor(l.owner)};color:white;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center">${staffInitials(l.owner)}</div><span style="font-size:11px;color:var(--mgray)">${staffName(l.owner)}</span></div></td>
             <td onclick="event.stopPropagation()"><div class="action-row">
@@ -1622,10 +1679,10 @@ let editingTaskId = null;
 
 const TASK_TYPES = {
   call:     {label:'Gọi điện',    icon:'📞', bg:'#EBF3FC', color:'#0F3460'},
-  meet:     {label:'Gặp mặt',     icon:'🤝', bg:'#E0F4F1', color:'#0A4D45'},
+  meet:     {label:'Gặp mặt',     icon:'🤝', bg:'#E0F4F1', color:'#8F6A2B'},
   send:     {label:'Gửi tài liệu',icon:'📤', bg:'#F0E8FB', color:'#3D0D6E'},
   design:   {label:'Công việc TK',icon:'🎨', bg:'#EBF3FC', color:'#0F3460'},
-  construct:{label:'Công việc TC',icon:'🔨', bg:'#E0F4F1', color:'#0A4D45'},
+  construct:{label:'Công việc TC',icon:'🔨', bg:'#E0F4F1', color:'#8F6A2B'},
   payment:  {label:'Thu tiền/HĐ', icon:'💰', bg:'#FFF0E0', color:'#7A3800'},
   followup: {label:'Follow-up',   icon:'🔔', bg:'#F0E8FB', color:'#3D0D6E'},
   other:    {label:'Khác',        icon:'📌', bg:'#F5F5F5', color:'#666'},
@@ -1708,7 +1765,7 @@ function renderTasksGlobal(myTasks){
     if(!arr.length) return '';
     return `<div class="task-group" style="margin-bottom:10px">
       <div class="task-group-header">
-        <div class="task-group-title" style="color:${color}">${title} <span style="font-family:'DM Mono',monospace">(${arr.length})</span></div>
+        <div class="task-group-title" style="color:${color}">${title} <span style="font-family:'Be Vietnam Pro',sans-serif">(${arr.length})</span></div>
       </div>
       ${arr.map(t => renderTaskGlobalRow(t)).join('')}
     </div>`;
@@ -1728,13 +1785,20 @@ function renderTaskGlobalRow(t){
   const dateStatus = getTaskDateStatus(t);
   const kh = t.leadId ? leads.find(l=>l.id==t.leadId) : null;
   const assignee = loadStaffList().find(s=>s.id===t.assignee);
-  return `<div class="task-global-row">
+  // Nút Nhận/Giao việc: chỉ hiện khi việc CHƯA được nhận và CHƯA hoàn thành
+  const claimBtns = (!t.claimed && !t.done) ? `
+      <button class="icon-btn claim-btn" title="Nhận việc này" onclick="claimTask('${t.id}',event)">✋ Nhận</button>
+      ${isManager()?`<button class="icon-btn assign-btn" title="Giao cho nhân viên" onclick="openAssignMenu('${t.id}',event)">👥 Giao</button>`:''}` : '';
+  // Nhãn "Đã nhận" khi việc đã được nhận/giao
+  const claimedTag = t.claimed ? `<span class="task-claimed-tag" title="${t.assignedBy?('Giao bởi '+t.assignedBy):''}">✓ Đã nhận${assignee?(' · '+assignee.name):''}</span>` : '';
+  return `<div class="task-global-row${t.claimed?' is-claimed':''}">
     <div class="task-check2 ${t.done?'done':dateStatus==='overdue'?'overdue':''}" onclick="toggleTask('${t.id}',event)">${t.done?'✓':''}</div>
     <div style="flex:1;min-width:0">
       <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
         <span style="font-size:12.5px;font-weight:${t.done?'400':'600'};color:${t.done?'var(--mgray)':'var(--charcoal)'};${t.done?'text-decoration:line-through':''}">${t.text}</span>
         <span class="task-type-tag" style="background:${tt.bg};color:${tt.color}">${tt.icon} ${tt.label}</span>
         ${t.urgency==='red'?'<span style="font-size:9px;background:var(--lred);color:var(--ruby);padding:1px 6px;border-radius:8px;font-weight:700">🔴 Khẩn</span>':''}
+        ${claimedTag}
       </div>
       <div style="display:flex;align-items:center;gap:10px;margin-top:4px;flex-wrap:wrap">
         ${kh?`<span class="task-kh-pill" style="background:${SBG[kh.stage]||'#eee'};color:${SC[kh.stage]||'#555'}">${getPipe(kh.stage)==='tc'?'🔨':'🎨'} ${kh.name}</span>`:''}
@@ -1744,6 +1808,7 @@ function renderTaskGlobalRow(t){
       </div>
     </div>
     <div class="task-row-actions">
+      ${claimBtns}
       <button class="icon-btn" onclick="event.stopPropagation();openEditTask('${t.id}')">✏️</button>
       <button class="icon-btn" onclick="event.stopPropagation();confirmDeleteTask('${t.id}')">🗑️</button>
     </div>
@@ -1771,7 +1836,7 @@ function renderTasksByKh(khList, selKh){
     if(!arr.length) return '';
     return `<div class="task-group" style="margin-bottom:10px">
       <div class="task-group-header"><div class="task-group-title" style="color:${borderColor}">${title} (${arr.length})</div></div>
-      ${arr.map(t=>renderKhTaskRow(t)).join('')}
+      ${arr.map(t=>renderTaskGlobalRow(t)).join('')}
     </div>`;
   }
 
@@ -1844,7 +1909,7 @@ function renderTasksByKh(khList, selKh){
           <div style="flex:1;height:5px;background:#e0dbd3;border-radius:3px;overflow:hidden">
             <div style="height:100%;background:var(--emerald);width:${Math.round(stageDoneCount/stageTotalCount*100)}%;border-radius:3px;transition:width .3s"></div>
           </div>
-          <span style="font-size:11px;font-weight:600;color:var(--emerald);font-family:'DM Mono',monospace">${stageDoneCount}/${stageTotalCount}</span>
+          <span style="font-size:11px;font-weight:600;color:var(--emerald);font-family:'Be Vietnam Pro',sans-serif">${stageDoneCount}/${stageTotalCount}</span>
           ${stageDoneCount<stageTotalCount ? `<button class="btn btn-sm" style="background:var(--goldbg);color:var(--amber);font-size:10px;padding:3px 9px" onclick="createMissingChecklistTasks(${selKh.id},'${selKh.stage}')">+ Tạo lại việc mẫu</button>` : '<span style="font-size:10px;color:var(--emerald)">✅ Hoàn thành</span>'}
         </div>` : ''}
       </div>
@@ -1864,7 +1929,7 @@ function renderTasksByKh(khList, selKh){
               <span style="width:5px;height:5px;border-radius:50%;background:${uColor};flex-shrink:0;margin-top:5px"></span>
               <div style="flex:1;min-width:0">
                 <span style="font-size:11.5px;color:${done?'var(--mgray)':'var(--charcoal)'};${done?'text-decoration:line-through':''};line-height:1.35;font-weight:500">${tpl.text}</span>
-                ${tpl.sla?`<span style="font-size:9px;font-family:'DM Mono',monospace;color:${uColor};background:${pipe==='tc'?'rgba(10,77,69,.08)':'rgba(15,52,96,.08)'};padding:1px 5px;border-radius:6px;margin-left:5px;white-space:nowrap">${tpl.sla}</span>`:''}
+                ${tpl.sla?`<span style="font-size:9px;font-family:'Be Vietnam Pro',sans-serif;color:${uColor};background:${pipe==='tc'?'rgba(10,77,69,.08)':'rgba(15,52,96,.08)'};padding:1px 5px;border-radius:6px;margin-left:5px;white-space:nowrap">${tpl.sla}</span>`:''}
                 ${tpl.tip?`<div style="font-size:10px;color:var(--mgray);line-height:1.3;margin-top:2px;font-style:italic">💬 ${tpl.tip.length>70?tpl.tip.slice(0,70)+'...':tpl.tip}</div>`:''}
               </div>
             </div>`;
@@ -1885,7 +1950,7 @@ function renderTasksByKh(khList, selKh){
         ${renderKhTaskGroup('📌 Sắp tới', grouped.upcoming, 'var(--charcoal)')}
         ${done.length>0?`<div class="task-group">
           <div class="task-group-header"><div class="task-group-title">✅ Đã hoàn thành (${done.length})</div></div>
-          ${done.slice(0,15).map(t=>renderKhTaskRow(t)).join('')}
+          ${done.slice(0,15).map(t=>renderTaskGlobalRow(t)).join('')}
         </div>`:''}
       `}
     </div>
@@ -2179,7 +2244,7 @@ function renderLogTable(){
           const isAdd = l.action.includes('Thêm');
           const rowBg = isDelete?'background:#fff5f5':isAdd?'background:#f0fdf4':'';
           return `<tr style="${rowBg}">
-            <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mgray);white-space:nowrap">${l.time||'–'}</td>
+            <td style="font-family:'Be Vietnam Pro',sans-serif;font-size:11px;color:var(--mgray);white-space:nowrap">${l.time||'–'}</td>
             <td>
               <div style="display:flex;align-items:center;gap:7px">
                 <div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:var(--gold2);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0">
@@ -2194,7 +2259,7 @@ function renderLogTable(){
               <div style="font-size:10.5px;color:var(--mgray)">${l.target||''} ${l.targetId?'#'+String(l.targetId).slice(-6):''}</div>
             </td>
             <td style="font-size:11.5px;color:var(--mgray);max-width:200px">${l.detail||'–'}</td>
-            <td style="font-size:11px;font-family:'DM Mono',monospace">
+            <td style="font-size:11px;font-family:'Be Vietnam Pro',sans-serif">
               ${l.oldStage&&l.newStage ? `<span style="color:var(--mgray)">${l.oldStage}</span> → <span style="color:var(--emerald)">${l.newStage}</span>` : '–'}
             </td>
           </tr>`;
@@ -2211,14 +2276,14 @@ function renderConnect(){
   document.getElementById('page-content').innerHTML=`
     <div style="max-width:640px">
       <div class="table-wrap" style="padding:28px;margin-bottom:16px">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--navy);margin-bottom:6px">🔗 Kết nối Google Sheets</div>
+        <div style="font-family:'Be Vietnam Pro',sans-serif;font-size:22px;font-weight:600;color:var(--navy);margin-bottom:6px">🔗 Kết nối Google Sheets</div>
         <div style="font-size:13px;color:var(--mgray);margin-bottom:22px;line-height:1.7">Dữ liệu CRM sẽ được lưu vào Google Sheets và đồng bộ theo thời gian thực.
       <div style="background:var(--goldbg);border:1px solid #e8d99a;border-radius:8px;padding:10px 14px;font-size:12px;color:var(--amber);margin-top:10px">
         📱 <strong>Dùng trên điện thoại?</strong> Nhập đúng URL này vào ô bên dưới — dữ liệu KH và nhân viên sẽ tự đồng bộ về máy.
       </div></div>
         <div style="font-size:12px;font-weight:600;color:var(--charcoal);margin-bottom:8px">Web App URL:</div>
         <div style="display:flex;gap:9px;margin-bottom:14px">
-          <input type="text" id="api-url-input" class="form-input" style="flex:1;font-family:'DM Mono',monospace;font-size:11.5px" value="${saved}" placeholder="https://script.google.com/macros/s/ABC.../exec">
+          <input type="text" id="api-url-input" class="form-input" style="flex:1;font-family:'Be Vietnam Pro',sans-serif;font-size:11.5px" value="${saved}" placeholder="https://script.google.com/macros/s/ABC.../exec">
           <button class="btn btn-primary" onclick="testAndSaveUrl()">🔌 Kết nối & Test</button>
         </div>
         ${saved?`<div style="background:var(--lgreen);border:1px solid #bbf7d0;border-radius:8px;padding:11px 14px;font-size:12.5px;color:var(--emerald);display:flex;align-items:center;gap:8px"><span>✅</span> Đã có URL. Nhấn "Kết nối & Test" để kiểm tra lại.</div>`:''}
@@ -2231,7 +2296,14 @@ async function testAndSaveUrl(){
   if(!url||!url.includes('script.google.com')){toast('⚠️ URL không hợp lệ','⚠️');return;}
   setApiUrl(url); showLoading('Đang kiểm tra kết nối...');
   try{
-    await apiFetch({action:'ping'}); hideLoading();
+    // Test kết nối: chỉ cần server phản hồi JSON hợp lệ (pong hoặc ok) là đạt.
+    // KHÔNG dùng apiFetch ở đây vì apiFetch bắt buộc json.ok, mà action 'ping'
+    // ở một số bản Apps Script trả {pong:true} không kèm ok.
+    const res=await fetch(getApiUrl()+'?action=ping',{method:'GET',redirect:'follow'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const json=await res.json();
+    if(!(json.ok||json.pong)) throw new Error(json.error||'Phản hồi không hợp lệ');
+    hideLoading();
     toast('✅ Kết nối thành công!');
     await syncFromSheets();
     showPage('dashboard',document.querySelector('[data-page=dashboard]'));
@@ -2261,7 +2333,7 @@ function renderSettings(){
       </div>
       <div class="table-wrap" style="padding:22px">
         <div class="section-title">🔗 Trạng thái</div>
-        <div style="background:var(--lgray);border-radius:8px;padding:12px;font-size:12px;font-family:'DM Mono',monospace;line-height:1.9">
+        <div style="background:var(--lgray);border-radius:8px;padding:12px;font-size:12px;font-family:'Be Vietnam Pro',sans-serif;line-height:1.9">
           Trạng thái: ${isConnected?'✅ Đã kết nối':'❌ Chưa kết nối'}<br>
           KH Thiết kế: ${leads.filter(l=>getPipelineOfStage(l.stage||'tk_new')==='tk').length}<br>
           KH Thi công: ${leads.filter(l=>getPipelineOfStage(l.stage||'tk_new')==='tc').length}<br>
@@ -2299,7 +2371,7 @@ function openPanel(id){
 
   document.getElementById('panel-body').innerHTML=`
     <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
-      <span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:${pipe==='tc'?'#E0F4F1':'#EBF3FC'};color:${pipe==='tc'?'#0A4D45':'#0F3460'}">${pipe==='tc'?'🔨 Pipeline Thi công':'🎨 Pipeline Thiết kế'}</span>
+      <span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:${pipe==='tc'?'#E0F4F1':'#EBF3FC'};color:${pipe==='tc'?'#8F6A2B':'#0F3460'}">${pipe==='tc'?'🔨 Pipeline Thi công':'🎨 Pipeline Thiết kế'}</span>
       ${l.inBothPipelines?`<span style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#FFF0E0;color:#7A3800">⚡ Có trong cả 2 Pipeline</span>`:''}
     </div>
     ${canEdit?`<div class="quick-actions">
@@ -2310,7 +2382,7 @@ function openPanel(id){
     </div>`:''}
     <div class="next-action-box ${l.nextAction?'':'next-action-empty'}">
       <span class="na-icon">${l.nextAction?'👉':'💡'}</span>
-      <div class="na-text">${l.nextAction?l.nextAction+(l.nextDate?` <span style="font-family:'DM Mono',monospace;font-size:11px">(${new Date(l.nextDate).toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit'})})</span>`:''):'Chưa đặt hành động tiếp theo — hãy lên kế hoạch để không bỏ lỡ KH'}</div>
+      <div class="na-text">${l.nextAction?l.nextAction+(l.nextDate?` <span style="font-family:'Be Vietnam Pro',sans-serif;font-size:11px">(${new Date(l.nextDate).toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit'})})</span>`:''):'Chưa đặt hành động tiếp theo — hãy lên kế hoạch để không bỏ lỡ KH'}</div>
       ${canEdit?`<button class="btn btn-outline btn-sm" style="font-size:10px" onclick="openEditLead(${l.id})">Đặt</button>`:''}
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:9px 12px;background:var(--lgray);border-radius:8px">
@@ -2612,7 +2684,10 @@ function updateBadges(){
   if(document.getElementById('count-tk'))document.getElementById('count-tk').textContent=tkN;
   if(document.getElementById('count-tc'))document.getElementById('count-tc').textContent=tcN;
   if(document.getElementById('lead-count'))document.getElementById('lead-count').textContent=vl.length;
-  document.getElementById('task-count').textContent=tasks.filter(t=>!t.done).length;
+  // Badge "Công việc" chỉ đếm việc ĐÃ NHẬN và chưa hoàn thành.
+  // Task mẫu (chưa ai nhận) vẫn hiện để gợi ý nhưng KHÔNG tính vào quản lý,
+  // nên con số phản ánh đúng "việc đang thực sự được làm/cần theo dõi".
+  document.getElementById('task-count').textContent=tasks.filter(t=>!t.done && t.claimed).length;
 }
 
 // ══════════════════════════════════════════════════════════════
